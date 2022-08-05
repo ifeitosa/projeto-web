@@ -1,1 +1,4 @@
 br\com\letscode\supernova\batatas\BatatasApplication.class
+br\com\letscode\supernova\batatas\modelos\Processo.class
+br\com\letscode\supernova\batatas\repositorios\RepositorioProcesso.class
+br\com\letscode\supernova\batatas\modelos\ProdutoVenda.class
