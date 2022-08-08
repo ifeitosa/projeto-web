@@ -14,25 +14,21 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.LazyToOne;
 
+import br.com.letscode.supernova.batatas.dto.ProcessoDto;
+
 @Entity
 public class Processo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull @NotEmpty @NotBlank
     private String nome;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull @NotEmpty @NotBlank
     private String descricao;
     @NotNull
     private LocalDateTime dataRegistro = LocalDateTime.now();
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull @NotEmpty @NotBlank
     private String responsavel;
 
     public Processo() {
@@ -44,6 +40,10 @@ public class Processo {
         this.descricao = descricao;
         this.dataRegistro = dataRegistro;
         this.responsavel = responsavel;
+    }
+
+    public Processo(ProcessoDto dto) {
+        this(dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel());
     }
 
     public void setNome(String nome) {
