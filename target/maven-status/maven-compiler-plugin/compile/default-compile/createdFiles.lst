@@ -1,4 +1,6 @@
 br\com\letscode\supernova\batatas\BatatasApplication.class
+br\com\letscode\supernova\batatas\dto\ProcessoDto.class
+br\com\letscode\supernova\batatas\rest\ProcessoRestController.class
 br\com\letscode\supernova\batatas\modelos\Fase.class
 br\com\letscode\supernova\batatas\repositorios\RepositorioProdutoVenda.class
 br\com\letscode\supernova\batatas\modelos\InsumoConsumidoFase.class

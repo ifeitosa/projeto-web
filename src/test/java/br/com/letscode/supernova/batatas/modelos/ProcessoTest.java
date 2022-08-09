@@ -22,9 +22,9 @@ public class ProcessoTest {
     public void registrarEntidades() {
         repositorio.deleteAll();
         final Processo[] processos = {
-            new Processo("Processo TESTE 1", "Descricação do processo", LocalDateTime.now().minusDays(5), "Agenor"),
-            new Processo("Processo 2", "Descrição do processo TESTE", LocalDateTime.now().minusDays(2), "Cláudio"),
-            new Processo("Processo 3", "Descrição TESTE do processo", LocalDateTime.now().minusDays(1), "Hugo")
+            new Processo(null, "Processo TESTE 1", "Descricação do processo", LocalDateTime.now().minusDays(5), "Agenor"),
+            new Processo(null, "Processo 2", "Descrição do processo TESTE", LocalDateTime.now().minusDays(2), "Cláudio"),
+            new Processo(null, "Processo 3", "Descrição TESTE do processo", LocalDateTime.now().minusDays(1), "Hugo")
         };
         for(Processo p: processos) {
             repositorio.save(p);

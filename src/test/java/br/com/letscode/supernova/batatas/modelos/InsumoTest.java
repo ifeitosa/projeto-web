@@ -6,11 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
 
@@ -27,10 +24,10 @@ public class InsumoTest {
     @BeforeEach
     public void inserirInsumosDeTeste() {
         this.repositorioInsumo.deleteAll();
-        Insumo insumo1 = new Insumo("Batata-palha", "kg", 10D);
-        Insumo insumo2 = new Insumo("Batata-palito", "kg", 10.0D);
-        Insumo insumo3 = new Insumo("Batata cozida", "kg", 10.0D);
-        Insumo insumo4 = new Insumo("Purê de batata", "kg", 10.0D);
+        Insumo insumo1 = new Insumo(null, "Batata-palha", "kg", 10D);
+        Insumo insumo2 = new Insumo(null, "Batata-palito", "kg", 10.0D);
+        Insumo insumo3 = new Insumo(null, "Batata cozida", "kg", 10.0D);
+        Insumo insumo4 = new Insumo(null, "Purê de batata", "kg", 10.0D);
 
         this.repositorioInsumo.save(insumo1);
         this.repositorioInsumo.save(insumo2);

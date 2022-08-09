@@ -27,15 +27,15 @@ public class RepositorioProdutoVendaTest {
 
     @BeforeEach
     public void reiniciaDados() {
-        Processo processo1 = new Processo("Preparar batata-palha levemente salgada sabor bacon", "Processo de saborização da batata-palha", LocalDateTime.now().minusMonths(2), "Cláudio");
-        Processo processo2 = new Processo("Preparar batata-palito saborizada com cebola", "Processo de preparação da saborização de patata-palito", LocalDateTime.now().minusMonths(8).minusDays(5), "Roberto");
+        Processo processo1 = new Processo(null, "Preparar batata-palha levemente salgada sabor bacon", "Processo de saborização da batata-palha", LocalDateTime.now().minusMonths(2), "Cláudio");
+        Processo processo2 = new Processo(null, "Preparar batata-palito saborizada com cebola", "Processo de preparação da saborização de patata-palito", LocalDateTime.now().minusMonths(8).minusDays(5), "Roberto");
 
         this.repositorioProcesso.deleteAll();
         this.repositorioProcesso.save(processo1);
         this.repositorioProcesso.save(processo2);
 
-        ProdutoVenda prod1 = new ProdutoVenda(processo1, "A melhor batata-palha sabor bacon para seu strogonoff", "g");
-        ProdutoVenda prod2 = new ProdutoVenda(processo2, "O melhor acompanhamento do seu hamburger", "kg");
+        ProdutoVenda prod1 = new ProdutoVenda(null, processo1, "A melhor batata-palha sabor bacon para seu strogonoff", "g", 10.0D, 10.0D);
+        ProdutoVenda prod2 = new ProdutoVenda(null, processo2, "O melhor acompanhamento do seu hamburger", "kg", 10.0D, 10.0D);
 
         this.repositorioProdutoVenda.deleteAll();
         this.repositorioProdutoVenda.save(prod1);

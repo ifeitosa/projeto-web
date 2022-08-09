@@ -6,54 +6,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProcessoDto {
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull @NotEmpty @NotBlank
     String nome;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull @NotEmpty @NotBlank
     String descricao;
     @NotNull
-    LocalDateTime dataRegistro;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    LocalDateTime dataRegistro = LocalDateTime.now();
+    @NotNull @NotEmpty @NotBlank
     String responsavel;
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public LocalDateTime getDataRegistro() {
-        return dataRegistro;
-    }
-
-    public void setDataRegistro(LocalDateTime dataRegistro) {
-        this.dataRegistro = dataRegistro;
-    }
-
-    public String getResponsavel() {
-        return responsavel;
-    }
-
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
-    }
-
-    
-    
+   
 }
