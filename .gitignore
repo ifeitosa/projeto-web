@@ -26,3 +26,4 @@ batatas.mv.db
 target/
 .vscode
 *.drawio.*
+*.mv.db
