@@ -1,13 +1,21 @@
 package br.com.letscode.supernova.batatas.modelos;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -24,28 +32,37 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "insumosConsumidos")
 @ToString
 @Entity
 public class Fase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne @NotNull
+    @NotNull @ManyToOne
     private Processo processo;
 
-    @OneToMany
-    private List<InsumoConsumidoFase> insumosConsumidoFase;
-
-    @Positive @GeneratedValue(strategy = GenerationType.AUTO)
+    @Positive @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false)
     private Integer sequencia;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull @NotEmpty @NotBlank @Column(nullable = false)
     private String nome;
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty @Column(nullable = false)
     private String instrucoes;
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty @Column(nullable = false)
     private String unidadeProducao;
-    @Positive @NotNull
+    @Positive @NotNull @Column(nullable = false)
     private Double quantidadeProduzida;
-
     
+    @ElementCollection(targetClass = InsumoConsumidoFase.class, fetch = FetchType.LAZY)
+    @CollectionTable(joinColumns = @JoinColumn(name = "fase"))    
+    @OrderBy(value = "id")
+    private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
+    
+    public Fase(FaseDto dto, Processo processo) {
+        this(null, processo, dto.getSequencia(),  dto.getNome(), dto.getInstrucoes(), 
+        dto.getUnidadeProducao, dto.getQuantidadeProduzida(), 
+        dto.getInsumosConsumidos()
+            .stream()
+            .map(icdto -> new InsumoConsumidoFase(icdto))
+            .collect(Collectors.toList()));
+    }
 }

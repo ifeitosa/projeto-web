@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class InsumoTest {
     }
 
     @BeforeEach
+    @Transactional
     public void inserirInsumosDeTeste() {
         this.repositorioInsumo.deleteAll();
         Insumo insumo1 = new Insumo(null, "Batata-palha", "kg", 10D);

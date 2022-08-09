@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +28,8 @@ public class RepositorioProdutoVendaTest {
 
     @BeforeEach
     public void reiniciaDados() {
-        Processo processo1 = new Processo(null, "Preparar batata-palha levemente salgada sabor bacon", "Processo de saborização da batata-palha", LocalDateTime.now().minusMonths(2), "Cláudio");
-        Processo processo2 = new Processo(null, "Preparar batata-palito saborizada com cebola", "Processo de preparação da saborização de patata-palito", LocalDateTime.now().minusMonths(8).minusDays(5), "Roberto");
+        Processo processo1 = new Processo(null, "Preparar batata-palha levemente salgada sabor bacon", "Processo de saborização da batata-palha", LocalDateTime.now().minusMonths(2), "Cláudio", new ArrayList<>());
+        Processo processo2 = new Processo(null, "Preparar batata-palito saborizada com cebola", "Processo de preparação da saborização de patata-palito", LocalDateTime.now().minusMonths(8).minusDays(5), "Roberto", new ArrayList<>());
 
         this.repositorioProcesso.deleteAll();
         this.repositorioProcesso.save(processo1);

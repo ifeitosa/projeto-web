@@ -1,9 +1,13 @@
 package br.com.letscode.supernova.batatas.modelos;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -27,13 +31,14 @@ import lombok.ToString;
 public class InsumoConsumidoFase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    private Fase fase;
-    @OneToOne
+    @ManyToOne(optional = false)
     private Insumo insumo;
-    @Positive @NotNull
+    @Positive @NotNull @Column(nullable = false)
     private Double quantidadeConsumida;
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty @Column(nullable = false)
     private String unidadeConsumo;
     
+    public InsumoConsumidoFase(InsumoConsumidoFaseDto dto) {
+        this(null, null, dto.getQuantidadeProduzida(), dto.getUnidadeProducao());
+    }
 }

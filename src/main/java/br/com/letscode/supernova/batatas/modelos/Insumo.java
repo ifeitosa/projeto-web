@@ -1,5 +1,6 @@
 package br.com.letscode.supernova.batatas.modelos;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,11 @@ import lombok.ToString;
 public class Insumo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank @NotEmpty @NotNull
+    @NotBlank @NotEmpty @NotNull @Column(nullable = false)
     private String nome;
-    @NotBlank @NotEmpty @NotNull
+    @NotBlank @NotEmpty @NotNull @Column(nullable = false)
     private String unidadeMedida;
-    @Positive @NotNull
+    @Positive @NotNull @Column(nullable = false)
     private Double estoqueMinimo;
 
 }

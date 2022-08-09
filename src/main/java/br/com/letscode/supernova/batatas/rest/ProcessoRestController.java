@@ -1,6 +1,7 @@
 package br.com.letscode.supernova.batatas.rest;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,8 @@ public class ProcessoRestController {
         this.repositorioProcesso = repositorioProcesso;
     }
     @GetMapping("/")
-    public List<Processo> obterProcessos() {
-        return this.repositorioProcesso.findAll();
+    public List<ProcessoDto> obterProcessos() {
+        return this.repositorioProcesso.findAll().stream().map(ProcessoDto::new).collect(Collectors.toList());
     }
 
     @PostMapping("/")
