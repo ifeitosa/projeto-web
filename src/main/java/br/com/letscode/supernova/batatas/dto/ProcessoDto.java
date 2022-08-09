@@ -1,6 +1,8 @@
 package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
@@ -28,12 +30,5 @@ public class ProcessoDto {
     String responsavel;
     private List<FaseDto> fases = new ArrayList<>();
 
-    public ProcessoDto(Processo processo) {
-        this.nome = processo.getNome();
-        this.descricao = processo.getDescricao();
-        this.dataRegistro = processo.getDataRegistro();
-        this.responsavel = processo.getResponsavel();
-        this.fases = processo.getFases().stream().map(FaseDto::new).collect(Collectors.toList());
-    }
-   
+      
 }

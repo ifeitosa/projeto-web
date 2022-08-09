@@ -2,7 +2,6 @@ package br.com.letscode.supernova.batatas.modelos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -57,12 +55,4 @@ public class Fase {
     @OrderBy(value = "id")
     private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
     
-    public Fase(FaseDto dto, Processo processo) {
-        this(null, processo, dto.getSequencia(),  dto.getNome(), dto.getInstrucoes(), 
-        dto.getUnidadeProducao, dto.getQuantidadeProduzida(), 
-        dto.getInsumosConsumidos()
-            .stream()
-            .map(icdto -> new InsumoConsumidoFase(icdto))
-            .collect(Collectors.toList()));
-    }
 }

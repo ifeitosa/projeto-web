@@ -3,7 +3,6 @@ package br.com.letscode.supernova.batatas.modelos;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -13,13 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,8 +47,4 @@ public class Processo {
     @OrderColumn(name = "sequencia")
     private List<Fase> fases = new ArrayList<>();
     
-    public Processo(ProcessoDto dto) {
-        this(null, dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel(),
-            dto.getFases().stream().map(fase -> new Fase(FaseDto, this)).collect(Collectors.toList()));
-    }
 }

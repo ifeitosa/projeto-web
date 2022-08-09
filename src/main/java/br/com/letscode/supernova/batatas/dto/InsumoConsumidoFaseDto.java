@@ -1,6 +1,13 @@
 package br.com.letscode.supernova.batatas.dto;
 
+import javax.validation.constraints.NotNull;
+
 import br.com.letscode.supernova.batatas.modelos.InsumoConsumidoFase;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -19,9 +26,5 @@ public class InsumoConsumidoFaseDto {
     private Double quantidadeConsumida;
     @NotNull
     private String unidadeConsumo;
-    
-    public InsumoConsumidoFaseDto(InsumoConsumidoFase insumoConsumido) {
-        this(insumoConsumido.getId(), new InsumoDto(insumoConsumido.getInsumo()), 
-            insumoConsumido.getQuantidadeConsumida(), insumoConsumido.getUnidadeConsumo());
-    }
+   
 }
