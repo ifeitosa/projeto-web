@@ -16,20 +16,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.letscode.supernova.batatas.BatatasApplication;
 import br.com.letscode.supernova.batatas.dto.FaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoConsumidoFaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoDto;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 
 @AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = BatatasApplication.class)
+@SpringBootTest
 public class ProcessoRestControllerTest {
     
     @Autowired
@@ -59,33 +59,41 @@ public class ProcessoRestControllerTest {
         new FaseDto(3, "Fase 3", "Instrução da fase 3", "m", 2.1D, List.of(consumidos[3]))
     };
     private static final ProcessoDto processo = 
-        new ProcessoDto(Long.valueOf(3), "Processo de teste", 
+        new ProcessoDto(Long.valueOf(1L), "Processo de teste", 
                 "Este é um processo de teste", 
                 LocalDateTime.now(), 
                 "Italo", 
-                List.of(fases));
+                List.of(fases[0], fases[1], fases[2]));
 
     @Test    
+    @WithMockUser(roles = "USER",username = "user", password= "batatas")
     public void testarConsultarATodos() throws UnsupportedEncodingException, Exception {
-        String result = this.mvc.perform(get("/processo"))
+        
+        String result = this.mvc.perform(get("/processo").secure(false).accept(MediaType.APPLICATION_JSON_VALUE).characterEncoding("UTF-8"))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(MockMvcResultMatchers.content().encoding("UTF-8"))
             .andDo(MockMvcResultHandlers.print())
             .andDo(MockMvcResultHandlers.print())
-            .andReturn().toString();
+            .andReturn().getResponse().getContentAsString();
             
         assertTrue(result.length() > 0);
     }
 
-    @Test    
+    @Test
+    @WithMockUser(roles = "USER", username = "user", password= "batatas")
     public void testarCriacao() throws UnsupportedEncodingException, Exception {
-        String result = this.mvc.perform(post("/processo/").contentType(MediaType.APPLICATION_JSON_VALUE).content(objectMapper.writeValueAsString(processo)).accept(MediaType.APPLICATION_JSON_VALUE))
+        System.out.println("[>>>>>]\t\t" + objectMapper.writeValueAsString(processo));
+        String result = this.mvc.perform(
+                post("/processo/")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .characterEncoding("UTF-8")
+                    .content(objectMapper.writeValueAsString(processo))
+                    .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-            .andExpect(content().encoding("UTF-8"))
             .andDo(MockMvcResultHandlers.print())
-            .andReturn().getResponse().getContentAsString();   
+            .andReturn().getResponse().getContentAsString();
+            assertTrue(result.length() >0 );   
     }
 
 }

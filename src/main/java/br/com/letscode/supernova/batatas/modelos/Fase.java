@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +19,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -51,8 +55,9 @@ public class Fase {
     private Double quantidadeProduzida;
     
     @ElementCollection(targetClass = InsumoConsumidoFase.class, fetch = FetchType.LAZY)
-    @CollectionTable(joinColumns = @JoinColumn(name = "fase"))    
+    @CollectionTable(joinColumns = @JoinColumn(name = "fase", table = "INSUMOS_CONSUMIDOS_FASE"))    
     @OrderBy(value = "id")
+    @Cascade(CascadeType.ALL)
     private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
     
 }

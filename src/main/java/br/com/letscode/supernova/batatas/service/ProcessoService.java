@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.mapper.ProcessoMapper;
 import br.com.letscode.supernova.batatas.modelos.Fase;
-import br.com.letscode.supernova.batatas.modelos.InsumoConsumidoFase;
 import br.com.letscode.supernova.batatas.modelos.Processo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioFase;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
@@ -27,14 +27,16 @@ public class ProcessoService {
     private RepositorioFase repositorioFase;
     private RepositorioInsumoConsumidoFase repositorioInsumoConsumidoFase;
     private RepositorioInsumo repositorioInsumo;
+    private EntityManager em;
 
     public ProcessoService(@Autowired RepositorioProcesso repositorioProcesso,
     @Autowired RepositorioFase repositorioFase, @Autowired RepositorioInsumoConsumidoFase repositorioInsumoConsumidoFase,
-    @Autowired RepositorioInsumo repositorioInsumo) {
+    @Autowired RepositorioInsumo repositorioInsumo, @Autowired EntityManager em) {
         this.repositorioProcesso = repositorioProcesso;
         this.repositorioFase = repositorioFase;
         this.repositorioInsumoConsumidoFase = repositorioInsumoConsumidoFase;
         this.repositorioInsumo = repositorioInsumo;
+        this.em = em;
     }
 
     @Transactional
@@ -50,21 +52,22 @@ public class ProcessoService {
 
         Optional<Processo> talvezProcesso = this.repositorioProcesso.findById(id);
         if (talvezProcesso.isEmpty()) return null;
-        final Processo processo = talvezProcesso.get();
-        processo.setId(id);
-        processo.setDataRegistro(dto.getDataRegistro());
-        processo.setDescricao(dto.getDescricao());
-        processo.setNome(dto.getNome());
-        processo.setResponsavel(dto.getResponsavel());
-        processo.setFases(dto.getFases().stream().map(f -> ProcessoMapper.toEntity(f, processo)).collect(Collectors.toList()));
-        for(Fase fase : processo.getFases()) {
-            for(InsumoConsumidoFase insumoConsumidoFase : fase.getInsumosConsumidos()) {
-                insumoConsumidoFase.setInsumo(this.repositorioInsumo.save(insumoConsumidoFase.getInsumo()));
-            }
-            fase.setInsumosConsumidos(this.repositorioInsumoConsumidoFase.saveAll(fase.getInsumosConsumidos()));
-        }
-        processo.setFases(this.repositorioFase.saveAll(processo.getFases()));
-        return ProcessoMapper.fromEntity(this.repositorioProcesso.save(processo));
+        Processo processo = talvezProcesso.get();
+        dto.setId(processo.getId());
+        
+        final Processo p = em.merge(this.em.merge(ProcessoMapper.toEntity(dto)));
+        p.getFases().stream().forEach(f -> {
+            f.setProcesso(p);
+            Fase g = this.em.merge(f);
+            g.setInsumosConsumidos(g.getInsumosConsumidos().stream().map(ic -> {
+                ic.setInsumo(em.merge(ic.getInsumo()));
+                ic.setFase(g);
+                return em.merge(ic);
+            }).collect(Collectors.toList()));
+        });
+        em.merge(p);
+        em.flush();
+        return ProcessoMapper.fromEntity(p);
     }
 
     public Optional<ProcessoDto> obterProcesso(Long id) {

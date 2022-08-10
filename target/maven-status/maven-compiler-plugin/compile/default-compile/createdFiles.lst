@@ -1,6 +1,7 @@
 br\com\letscode\supernova\batatas\mapper\ProcessoMapper.class
 br\com\letscode\supernova\batatas\dto\ProcessoDto.class
 br\com\letscode\supernova\batatas\rest\ProcessoRestController.class
+br\com\letscode\supernova\batatas\modelos\InsumoFase.class
 br\com\letscode\supernova\batatas\service\ProcessoService.class
 br\com\letscode\supernova\batatas\modelos\InsumoConsumidoFase.class
 br\com\letscode\supernova\batatas\dto\InsumoConsumidoFaseDto.class

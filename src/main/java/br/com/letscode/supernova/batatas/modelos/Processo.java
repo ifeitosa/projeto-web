@@ -8,6 +8,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,9 @@ import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,7 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "fases")
-@ToString
+@ToString(exclude = "fases")
 @Entity
 public class Processo {
 
@@ -43,8 +47,9 @@ public class Processo {
     private LocalDateTime dataRegistro = LocalDateTime.now();
     @NotNull @NotEmpty @NotBlank @Column(nullable = false, updatable = false)
     private String responsavel;
-    @ElementCollection @CollectionTable(name = "fases_processo", joinColumns =  @JoinColumn(name = "processo", table = "FASE"))
+    @ElementCollection(fetch = FetchType.EAGER) @CollectionTable(name = "fases_processo", joinColumns =  @JoinColumn(name = "processo", table = "FASE"))
     @OrderColumn(name = "sequencia")
+    @Cascade(CascadeType.ALL)
     private List<Fase> fases = new ArrayList<>();
     
 }
