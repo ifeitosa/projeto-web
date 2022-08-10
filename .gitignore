@@ -3,6 +3,8 @@
 
 # Log file
 *.log
+*.txt
+*.lst
 
 # BlueJ files
 *.ctxt
@@ -25,5 +27,6 @@ hs_err_pid*
 batatas.mv.db
 target/
 .vscode
+.vscode/*
 *.drawio.*
 *.mv.db
