@@ -12,12 +12,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,9 +38,6 @@ import lombok.ToString;
 public class Fase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull @ManyToOne
-    private Processo processo;
-
     @Positive @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false)
     private Integer sequencia;
     @NotNull @NotEmpty @NotBlank @Column(nullable = false)
@@ -53,6 +52,7 @@ public class Fase {
     @ElementCollection(targetClass = InsumoConsumidoFase.class, fetch = FetchType.LAZY)
     @CollectionTable(joinColumns = @JoinColumn(name = "fase"))    
     @OrderBy(value = "id")
+    @Cascade(CascadeType.ALL)
     private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
     
 }

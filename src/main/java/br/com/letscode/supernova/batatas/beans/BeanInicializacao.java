@@ -51,8 +51,8 @@ public class BeanInicializacao {
         insumo2 = this.repoInsumo.save(insumo2);
         insumo3 = this.repoInsumo.save(insumo3);
 
-        Fase fase1 = new Fase(null, processo, 1, "Fase 1 teste", "Testagem da fase 1", "kg", 10.0D, new ArrayList<>());
-        Fase fase2 = new Fase(null, processo, 2, "Fase 2 teste", "Testagem da fase 2", "l", 10.0D, new ArrayList<>());
+        Fase fase1 = new Fase(null, 1, "Fase 1 teste", "Testagem da fase 1", "kg", 10.0D, new ArrayList<>());
+        Fase fase2 = new Fase(null, 2, "Fase 2 teste", "Testagem da fase 2", "l", 10.0D, new ArrayList<>());
         processo.getFases().add(fase1);
         processo.getFases().add(fase2);
         processo.setFases(this.repoFase.saveAll(processo.getFases()));

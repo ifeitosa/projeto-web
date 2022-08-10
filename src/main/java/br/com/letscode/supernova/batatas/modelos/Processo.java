@@ -17,6 +17,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,6 +48,7 @@ public class Processo {
     private String responsavel;
     @ElementCollection @CollectionTable(name = "fases_processo", joinColumns =  @JoinColumn(name = "processo", table = "FASE"))
     @OrderColumn(name = "sequencia")
+    @Cascade(CascadeType.ALL)    
     private List<Fase> fases = new ArrayList<>();
     
 }

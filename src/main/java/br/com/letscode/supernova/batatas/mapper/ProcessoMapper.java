@@ -33,13 +33,11 @@ public class ProcessoMapper {
     }
 
     public static Processo toEntity(ProcessoDto dto) {
-        Processo processo = new Processo(null, dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel(), null);
-        processo.setFases(dto.getFases().stream().map(fdto -> ProcessoMapper.toEntity(fdto, processo)).collect(Collectors.toList()));
-	return processo;
+        return new Processo(null, dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel(), dto.getFases().stream().map(ProcessoMapper::toEntity).collect(Collectors.toList()));
     }
 
-    public static Fase toEntity(FaseDto dto, Processo processo) {
-        Fase fase = new Fase(null, processo, dto.getSequencia(), dto.getNome(), 
+    public static Fase toEntity(FaseDto dto) {
+        Fase fase = new Fase(null, dto.getSequencia(), dto.getNome(), 
             dto.getInstrucoes(), dto.getUnidadeProducao(), dto.getQuantidadeProduzida(), 
             dto.getInsumosConsumidos().stream().map(ProcessoMapper::toEntity)
                 .collect(Collectors.toList()));

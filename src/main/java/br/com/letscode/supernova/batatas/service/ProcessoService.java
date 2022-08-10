@@ -50,21 +50,10 @@ public class ProcessoService {
 
         Optional<Processo> talvezProcesso = this.repositorioProcesso.findById(id);
         if (talvezProcesso.isEmpty()) return null;
-        final Processo processo = talvezProcesso.get();
+        Processo processo = ProcessoMapper.toEntity(dto);
         processo.setId(id);
-        processo.setDataRegistro(dto.getDataRegistro());
-        processo.setDescricao(dto.getDescricao());
-        processo.setNome(dto.getNome());
-        processo.setResponsavel(dto.getResponsavel());
-        processo.setFases(dto.getFases().stream().map(f -> ProcessoMapper.toEntity(f, processo)).collect(Collectors.toList()));
-        for(Fase fase : processo.getFases()) {
-            for(InsumoConsumidoFase insumoConsumidoFase : fase.getInsumosConsumidos()) {
-                insumoConsumidoFase.setInsumo(this.repositorioInsumo.save(insumoConsumidoFase.getInsumo()));
-            }
-            fase.setInsumosConsumidos(this.repositorioInsumoConsumidoFase.saveAll(fase.getInsumosConsumidos()));
-        }
-        processo.setFases(this.repositorioFase.saveAll(processo.getFases()));
-        return ProcessoMapper.fromEntity(this.repositorioProcesso.save(processo));
+        processo = this.repositorioProcesso.saveAndFlush(processo);
+        return ProcessoMapper.fromEntity(processo);
     }
 
     public Optional<ProcessoDto> obterProcesso(Long id) {

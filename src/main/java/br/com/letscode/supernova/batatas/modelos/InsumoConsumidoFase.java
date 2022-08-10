@@ -11,6 +11,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +31,7 @@ import lombok.ToString;
 public class InsumoConsumidoFase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false) @Cascade(CascadeType.ALL)
     private Insumo insumo;
     @Positive @NotNull @Column(nullable = false)
     private Double quantidadeConsumida;
