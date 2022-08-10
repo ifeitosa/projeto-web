@@ -8,6 +8,7 @@
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/repositorios/RepositorioProdutoVenda.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/BatatasApplication.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/modelos/Fase.java
+/home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/service/ProcessoService.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/dto/InsumoDto.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/dto/FaseDto.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/repositorios/RepositorioInsumo.java

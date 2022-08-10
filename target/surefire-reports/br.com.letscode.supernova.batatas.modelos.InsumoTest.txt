@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.letscode.supernova.batatas.modelos.InsumoTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 30.665 s - in br.com.letscode.supernova.batatas.modelos.InsumoTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.069 s - in br.com.letscode.supernova.batatas.modelos.InsumoTest

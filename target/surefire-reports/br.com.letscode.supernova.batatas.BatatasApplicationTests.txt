@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.letscode.supernova.batatas.BatatasApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.787 s - in br.com.letscode.supernova.batatas.BatatasApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.667 s - in br.com.letscode.supernova.batatas.BatatasApplicationTests

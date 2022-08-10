@@ -3,13 +3,12 @@ package br.com.letscode.supernova.batatas.dto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
-import br.com.letscode.supernova.batatas.modelos.Processo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +19,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcessoDto {
+    @NotNull @Positive
+    private Long id;
     @NotNull @NotEmpty @NotBlank
-    String nome;
+    private String nome;
     @NotNull @NotEmpty @NotBlank
-    String descricao;
+    private String descricao;
     @NotNull
-    LocalDateTime dataRegistro = LocalDateTime.now();
+    private LocalDateTime dataRegistro = LocalDateTime.now();
     @NotNull @NotEmpty @NotBlank
-    String responsavel;
+    private String responsavel;
     private List<FaseDto> fases = new ArrayList<>();
 
       

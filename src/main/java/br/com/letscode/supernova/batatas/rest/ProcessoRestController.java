@@ -1,40 +1,48 @@
 package br.com.letscode.supernova.batatas.rest;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.security.PermitAll;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
-import br.com.letscode.supernova.batatas.modelos.Processo;
-import br.com.letscode.supernova.batatas.repositorios.RepositorioProcesso;
+import br.com.letscode.supernova.batatas.service.ProcessoService;
 
-import br.com.letscode.supernova.batatas.mapper.*;
-
-@RestController
-@PermitAll
+@RestController(value = "/processo")
 public class ProcessoRestController {
 
-    private RepositorioProcesso repositorioProcesso;
+    private ProcessoService service;
     
-    public ProcessoRestController(@Autowired RepositorioProcesso repositorioProcesso) {
-        this.repositorioProcesso = repositorioProcesso;
+    public ProcessoRestController(@Autowired ProcessoService service) {
+        this.service = service;
     }
+
     @GetMapping("/")
     public List<ProcessoDto> obterProcessos() {
-        return this.repositorioProcesso.findAll().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toList());
+        return this.service.obterProcessos();
     }
 
     @PostMapping("/")
-    public Processo adicionarProceso(@RequestBody ProcessoDto dto) {
-        return null;
-        
+    public ProcessoDto adicionarProceso(@RequestBody ProcessoDto dto) {
+        return this.service.adicionarProcesso(dto);
+    }
+
+    @PutMapping("/{id:\\d+}")
+    public ProcessoDto corrigirProcesso(@PathVariable Long id, @RequestBody ProcessoDto dto) {
+        return this.service.corrigirProcesso(id, dto);
+    }
+
+    @GetMapping("/{id:\\d+}")
+    public Optional<ProcessoDto> obterProcesso(@PathVariable Long id) {
+        Objects.requireNonNull(id);
+        return this.service.obterProcesso(id);
     }
     
 }
