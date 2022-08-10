@@ -27,6 +27,6 @@ hs_err_pid*
 batatas.mv.db
 target/**
 .vscode
-.vscode/*
+.vscode/**
 *.drawio.*
 *.mv.db
