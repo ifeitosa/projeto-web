@@ -14,22 +14,30 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.letscode.supernova.batatas.BatatasApplication;
 import br.com.letscode.supernova.batatas.dto.FaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoConsumidoFaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoDto;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 
 @AutoConfigureMockMvc
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = BatatasApplication.class)
 public class ProcessoRestControllerTest {
     
     @Autowired
     MockMvc mvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
+    
     
     
     private static final InsumoDto[] insumos = {
@@ -57,20 +65,22 @@ public class ProcessoRestControllerTest {
                 "Italo", 
                 List.of(fases));
 
-    @Test
+    @Test    
     public void testarConsultarATodos() throws UnsupportedEncodingException, Exception {
-        String result = this.mvc.perform(get("/processo/").secure(false))
+        String result = this.mvc.perform(get("/processo"))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(MockMvcResultMatchers.content().encoding("UTF-8"))
             .andDo(MockMvcResultHandlers.print())
-            .andReturn().getResponse().getContentAsString();
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn().toString();
+            
         assertTrue(result.length() > 0);
     }
 
-    @Test
+    @Test    
     public void testarCriacao() throws UnsupportedEncodingException, Exception {
-        String result = this.mvc.perform(post("/processo/", processo).secure(false))
+        String result = this.mvc.perform(post("/processo/").contentType(MediaType.APPLICATION_JSON_VALUE).content(objectMapper.writeValueAsString(processo)).accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andExpect(content().encoding("UTF-8"))
