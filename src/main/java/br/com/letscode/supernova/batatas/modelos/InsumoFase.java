@@ -2,6 +2,9 @@ package br.com.letscode.supernova.batatas.modelos;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,6 +19,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class InsumoFase implements Serializable {
+    @Column(name = "insumo")
     private Insumo insumo;
+    @Column(name = "fase")
     private Fase fase;
 }

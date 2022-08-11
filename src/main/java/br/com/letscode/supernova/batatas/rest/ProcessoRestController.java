@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.service.ProcessoService;
 
@@ -21,9 +25,11 @@ import br.com.letscode.supernova.batatas.service.ProcessoService;
 public class ProcessoRestController {
 
     private ProcessoService service;
+    private ObjectMapper objectMapper;
     
-    public ProcessoRestController(@Autowired ProcessoService service) {
+    public ProcessoRestController(@Autowired ProcessoService service, ObjectMapper objectMapper) {
         this.service = service;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping
@@ -37,7 +43,7 @@ public class ProcessoRestController {
     }
 
     @PutMapping(path = "/{id:\\d+}")
-    public ProcessoDto corrigirProcesso(@PathVariable Long id, @RequestBody ProcessoDto dto) {
+    public Optional<ProcessoDto> corrigirProcesso(@PathVariable Long id, @RequestBody ProcessoDto dto) {
         return this.service.corrigirProcesso(id, dto);
     }
 

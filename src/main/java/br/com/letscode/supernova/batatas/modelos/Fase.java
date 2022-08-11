@@ -3,24 +3,20 @@ package br.com.letscode.supernova.batatas.modelos;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OrderBy;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -50,10 +46,9 @@ public class Fase {
     @Positive @NotNull @Column(nullable = false)
     private Double quantidadeProduzida;
     
-    @ElementCollection(targetClass = InsumoConsumidoFase.class, fetch = FetchType.LAZY)
-    @CollectionTable(joinColumns = @JoinColumn(name = "fase", table = "INSUMOS_CONSUMIDOS_FASE"))    
-    @OrderBy(value = "id")
-    @Cascade(CascadeType.ALL)
+    
+
+    @OneToMany(targetEntity = InsumoConsumidoFase.class, mappedBy = "fase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
     
 }
