@@ -48,9 +48,7 @@ public class ProcessoRestController {
 
     @PostMapping
     public ProcessoDto adicionarProceso(@Valid @RequestBody ProcessoDto dto) throws JsonProcessingException {
-        System.out.println(this.objectMapper.writeValueAsString(dto));
         ProcessoDto rdto = this.service.adicionarProcesso(dto);
-        System.out.println(this.objectMapper.writeValueAsString(rdto));
         return rdto;
     }
 

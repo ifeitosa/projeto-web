@@ -41,8 +41,7 @@ public class ProcessoService {
 
     @Transactional
     public ProcessoDto adicionarProcesso(ProcessoDto dto) throws JsonProcessingException {
-        Processo processo = ProcessoMapper.toEntity(dto);
-        System.out.println("[>>> adicionarProcesso]: " + objectMapper.writeValueAsString(processo));
+        Processo processo = ProcessoMapper.toEntity(dto);        
         processo.setId(null);
         processo.setFases(processo.getFases().stream().map(this.repositorioFase::save).map(f -> {
             f.setInsumosConsumidos(f.getInsumosConsumidos().stream().map(ic -> {

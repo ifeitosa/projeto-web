@@ -42,14 +42,14 @@ public class ProcessoMapper {
     public static Fase toEntity(FaseDto dto) {
         Fase fase = new Fase(null, dto.getSequencia(), dto.getNome(),
                 dto.getInstrucoes(), dto.getUnidadeProducao(), dto.getQuantidadeProduzida(),
-                dto.getInsumosConsumidos().stream().map(ProcessoMapper::toEntity)
-                        .collect(Collectors.toList()));
-
+                null);
+        fase.setInsumosConsumidos(dto.getInsumosConsumidos().stream().map(ic -> ProcessoMapper.toEntity(ic, fase))
+                .collect(Collectors.toList()));
         return fase;
     }
 
-    public static InsumoConsumidoFase toEntity(InsumoConsumidoFaseDto dto) {
-        return new InsumoConsumidoFase(null, ProcessoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(),
+    public static InsumoConsumidoFase toEntity(InsumoConsumidoFaseDto dto, Fase fase) {
+        return new InsumoConsumidoFase(null, fase, ProcessoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(),
                 dto.getUnidadeConsumo());
     }
 
