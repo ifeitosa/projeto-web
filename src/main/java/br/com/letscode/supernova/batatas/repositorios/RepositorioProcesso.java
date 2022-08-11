@@ -14,6 +14,6 @@ public interface RepositorioProcesso extends JpaRepository<Processo, Long> {
 
     List<Processo> findProcessoByNomeContaining(String parte);
     List<Processo> findProcessoByDescricaoContaining(String parte);
-    List<Processo> findProcessoByDataRegistroBetween(ZonedDateTime dataInicio, LocalDateTime dataFinal);
+    List<Processo> findProcessoByDataRegistroBetween(ZonedDateTime dataInicio, ZonedDateTime dataFinal);
     
 }

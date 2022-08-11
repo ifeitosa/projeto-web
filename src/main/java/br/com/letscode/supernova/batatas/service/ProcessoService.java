@@ -1,23 +1,20 @@
 package br.com.letscode.supernova.batatas.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.letscode.supernova.batatas.dto.FaseDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.mapper.ProcessoMapper;
-import br.com.letscode.supernova.batatas.modelos.Fase;
-import br.com.letscode.supernova.batatas.modelos.InsumoConsumidoFase;
 import br.com.letscode.supernova.batatas.modelos.Processo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioFase;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
@@ -29,35 +26,34 @@ public class ProcessoService {
 
     private RepositorioProcesso repositorioProcesso;
     private RepositorioFase repositorioFase;
-    private RepositorioInsumoConsumidoFase repositorioInsumoConsumidoFase;
+    private RepositorioInsumoConsumidoFase repositorioInsumoConsumido;
     private RepositorioInsumo repositorioInsumo;
-    private EntityManager em;
+    private ObjectMapper objectMapper;
 
-    public ProcessoService(@Autowired RepositorioProcesso repositorioProcesso,
-            @Autowired RepositorioFase repositorioFase,
-            @Autowired RepositorioInsumoConsumidoFase repositorioInsumoConsumidoFase,
-            @Autowired RepositorioInsumo repositorioInsumo, @Autowired EntityManager em) {
+    public ProcessoService(@Autowired RepositorioProcesso repositorioProcesso, @Autowired RepositorioFase repositorioFase, @Autowired RepositorioInsumoConsumidoFase repositorioInsumoConsumido, @Autowired RepositorioInsumo repositorioInsumo, @Autowired ObjectMapper objectMapper) {
         this.repositorioProcesso = repositorioProcesso;
         this.repositorioFase = repositorioFase;
-        this.repositorioInsumoConsumidoFase = repositorioInsumoConsumidoFase;
+        this.repositorioInsumoConsumido = repositorioInsumoConsumido;
         this.repositorioInsumo = repositorioInsumo;
-        this.em = em;
+        this.objectMapper = objectMapper;
+        
     }
 
     @Transactional
-    public ProcessoDto adicionarProcesso(ProcessoDto dto) {
+    public ProcessoDto adicionarProcesso(ProcessoDto dto) throws JsonProcessingException {
         Processo processo = ProcessoMapper.toEntity(dto);
+        System.out.println("[>>> adicionarProcesso]: " + objectMapper.writeValueAsString(processo));
         processo.setId(null);
-        processo = this.repositorioProcesso.save(processo);
-        processo.setFases(processo.getFases().stream().map(this.repositorioFase::save).peek(f -> {
-            f.setInsumosConsumidos(f.getInsumosConsumidos().map(ic -> {
-                ic.setFase(f);
+        //processo = this.repositorioProcesso.save(processo);
+        processo.setFases(processo.getFases().stream().map(this.repositorioFase::save).map(f -> {
+            f.setInsumosConsumidos(f.getInsumosConsumidos().stream().map(ic -> {
+                
                 ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
-                return this.repositorioInsumoConsumidoFase.save(ic);
-            }).collect(Collectors.toUnmodifiableList()));
-        }).collect(Collectors.toUnmodifiableList()));
-        processo.getFases().stream().forEach(this.repositorioFase::save);
-        return ProcessoMapper.fromEntity(this.repositorioProcesso.saveAndFlush(processo));
+                return this.repositorioInsumoConsumido.save(ic);
+            }).collect(Collectors.toList()));
+            return this.repositorioFase.save(f);
+        }).collect(Collectors.toList())); 
+        return ProcessoMapper.fromEntity(this.repositorioProcesso.save(processo));
         /*
          * processo.setFases(processo.getFases().stream().map(f -> {
          * Fase g = this.repositorioFase.save(f);
@@ -67,9 +63,9 @@ public class ProcessoService {
          * ic.setFase(g);
          * ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
          * return this.repositorioInsumoConsumidoFase.save(ic);
-         * }).collect(Collectors.toUnmodifiableList()));
+         * }).collect(Collectors.toList()));
          * return g;
-         * }).collect(Collectors.toUnmodifiableList()));
+         * }).collect(Collectors.toList()));
          */
     }
 
@@ -89,7 +85,7 @@ public class ProcessoService {
             p.setDescricao(dto.getDescricao());
             p.setResponsavel(dto.getResponsavel());
             p.setFases(dto.getFases().stream().map(ProcessoMapper::toEntity)
-                    .collect(Collectors.toUnmodifiableList()));
+                    .collect(Collectors.toList()));
             return ProcessoMapper.fromEntity(this.repositorioProcesso.save(p));
         }).get());
         /*

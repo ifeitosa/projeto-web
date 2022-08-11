@@ -50,7 +50,7 @@ public class ProcessoTest {
 
     @Test
     public void encontrarProcessoComDataEntreDiasPrevistos() {
-        List<Processo> processoTeste = repositorio.findProcessoByDataRegistroBetween(ZonedDateTime.now().minusDays(3), LocalDateTime.now().minusDays(2));
+        List<Processo> processoTeste = repositorio.findProcessoByDataRegistroBetween(ZonedDateTime.now().minusDays(3), ZonedDateTime.now().minusDays(2));
         assertEquals(1, processoTeste.size());
     }
     

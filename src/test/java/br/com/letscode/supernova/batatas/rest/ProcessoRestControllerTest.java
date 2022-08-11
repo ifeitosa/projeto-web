@@ -72,9 +72,8 @@ public class ProcessoRestControllerTest {
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
             .andDo(MockMvcResultHandlers.print())
-            .andDo(MockMvcResultHandlers.print())
             .andReturn().getResponse().getContentAsString();
-            
+        System.out.println("[>>>] " + result);
         assertTrue(result.length() > 0);
     }
 

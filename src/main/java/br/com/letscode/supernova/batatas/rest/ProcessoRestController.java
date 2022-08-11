@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
@@ -38,7 +39,8 @@ public class ProcessoRestController {
     }
 
     @PostMapping
-    public ProcessoDto adicionarProceso(@RequestBody ProcessoDto dto) {
+    public ProcessoDto adicionarProceso(@RequestBody ProcessoDto dto) throws JsonProcessingException {
+        System.out.println(this.objectMapper.writeValueAsString(dto));
         return this.service.adicionarProcesso(dto);
     }
 
