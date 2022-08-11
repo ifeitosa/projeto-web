@@ -9,17 +9,18 @@ import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.modelos.Fase;
 import br.com.letscode.supernova.batatas.modelos.Insumo;
 import br.com.letscode.supernova.batatas.modelos.InsumoConsumidoFase;
+import br.com.letscode.supernova.batatas.modelos.InsumoFase;
 import br.com.letscode.supernova.batatas.modelos.Processo;
 
 public class ProcessoMapper {
 
     public static ProcessoDto fromEntity(Processo p) {
-        return new ProcessoDto(p.getId(), p.getNome(), p.getDescricao(), p.getDataRegistro(), p.getResponsavel(), p.getFases().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toList()));
+        return new ProcessoDto(p.getId(), p.getNome(), p.getDescricao(), p.getDataRegistro(), p.getResponsavel(), p.getFases().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toUnmodifiableList()));
     }
 
     public static FaseDto fromEntity(Fase f) {
         return new FaseDto(f.getSequencia(), f.getNome(), f.getInstrucoes(), f.getUnidadeProducao(), f.getQuantidadeProduzida(),
-            f.getInsumosConsumidos().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toList()));
+            f.getInsumosConsumidos().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toUnmodifiableList()));
     }
 
     
@@ -33,19 +34,20 @@ public class ProcessoMapper {
     }
 
     public static Processo toEntity(ProcessoDto dto) {
-        return new Processo(null, dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel(), dto.getFases().stream().map(ProcessoMapper::toEntity).collect(Collectors.toList()));
+        return new Processo(null, dto.getNome(), dto.getDescricao(), dto.getDataRegistro(), dto.getResponsavel(), dto.getFases().stream().map(ProcessoMapper::toEntity).collect(Collectors.toUnmodifiableList()));
     }
 
     public static Fase toEntity(FaseDto dto) {
         Fase fase = new Fase(null, dto.getSequencia(), dto.getNome(), 
-            dto.getInstrucoes(), dto.getUnidadeProducao(), dto.getQuantidadeProduzida(), 
-            dto.getInsumosConsumidos().stream().map(ProcessoMapper::toEntity)
-                .collect(Collectors.toList()));
+            dto.getInstrucoes(), dto.getUnidadeProducao(), dto.getQuantidadeProduzida(), null);
+            fase.setInsumosConsumidos(
+                dto.getInsumosConsumidos().stream().map(icdto -> ProcessoMapper.toEntity(icdto, fase))
+                    .collect(Collectors.toUnmodifiableList()));
 	return fase;
     }
 
-    public static InsumoConsumidoFase toEntity(InsumoConsumidoFaseDto dto) {
-        return new InsumoConsumidoFase(null, ProcessoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(), dto.getUnidadeConsumo());
+    public static InsumoConsumidoFase toEntity(InsumoConsumidoFaseDto dto, Fase fase) {
+        return new InsumoConsumidoFase(fase, ProcessoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(), dto.getUnidadeConsumo());
     }
 
     public static Insumo toEntity(InsumoDto dto) {

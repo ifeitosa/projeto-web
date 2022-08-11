@@ -1,5 +1,5 @@
-br/com/letscode/supernova/batatas/modelos/InsumoTest.class
-br/com/letscode/supernova/batatas/modelos/ProcessoTest.class
-br/com/letscode/supernova/batatas/BatatasApplicationTests.class
-br/com/letscode/supernova/batatas/repositorios/RepositorioProdutoVendaTest.class
-br/com/letscode/supernova/batatas/rest/ProcessoRestControllerTest.class
+br\com\letscode\supernova\batatas\repositorios\RepositorioProdutoVendaTest.class
+br\com\letscode\supernova\batatas\modelos\InsumoTest.class
+br\com\letscode\supernova\batatas\BatatasApplicationTests.class
+br\com\letscode\supernova\batatas\modelos\ProcessoTest.class
+br\com\letscode\supernova\batatas\rest\ProcessoRestControllerTest.class
