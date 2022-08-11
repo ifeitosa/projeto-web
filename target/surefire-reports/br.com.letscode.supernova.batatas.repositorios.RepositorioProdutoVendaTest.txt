@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.483 s - in br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.252 s - in br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest

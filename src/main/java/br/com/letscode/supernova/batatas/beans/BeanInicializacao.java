@@ -3,19 +3,18 @@ package br.com.letscode.supernova.batatas.beans;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import br.com.letscode.supernova.batatas.dto.FaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoConsumidoFaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoDto;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
-import br.com.letscode.supernova.batatas.mapper.ProcessoMapper;
-import br.com.letscode.supernova.batatas.modelos.Processo;
 import br.com.letscode.supernova.batatas.service.ProcessoService;
 
 @Component
@@ -49,13 +48,9 @@ public class BeanInicializacao {
             List.of(fases));
 
     @EventListener
-    @Transactional
-    public void onStartup(WebServerInitializedEvent ignored) {
-        try {
-            service.adicionarProcesso(processo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void onStartup(WebServerInitializedEvent ignored) throws JsonProcessingException {
+        this.service.adicionarProcesso(processo);
+        
         /*
          * Processo processo = new Processo(null, "Processo de teste",
          * "Este é um teste de processo", LocalDateTime.now(),

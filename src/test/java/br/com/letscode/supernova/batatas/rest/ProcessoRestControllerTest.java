@@ -1,8 +1,12 @@
 package br.com.letscode.supernova.batatas.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,8 +95,77 @@ public class ProcessoRestControllerTest {
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andDo(MockMvcResultHandlers.print())
             .andReturn().getResponse().getContentAsString();
-            assertTrue(result.length() >0 );   
+        ProcessoDto rdto = objectMapper.readValue(result, ProcessoDto.class);
+        assertNotNull(rdto.getId());
     }
+
+    @Test
+    @WithMockUser(roles = "USER", username = "user", password = "batatas")
+    public void testarObjectProcesso() throws Exception {
+        String result = this.mvc.perform(
+                post("/processo/")
+                    .content(asJsonString(processo))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn().getResponse().getContentAsString();
+        ProcessoDto rdto = objectMapper.readValue(result, ProcessoDto.class);
+
+        ProcessoDto testeDto = objectMapper.readValue(
+            this.mvc.perform(get("/processo/{id}", rdto.getId())).andReturn().getResponse().getContentAsString(),
+            ProcessoDto.class
+        );
+        assertEquals(rdto.getId().longValue(), testeDto.getId().longValue());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER", username = "user", password ="batatas")
+    public void testarCorrigirProcesso() throws Exception {
+        String result = this.mvc.perform(
+                post("/processo/")
+                    .content(asJsonString(processo))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn().getResponse().getContentAsString();
+        ProcessoDto rdto = objectMapper.readValue(result, ProcessoDto.class);
+
+        ProcessoDto testeDto = objectMapper.readValue(
+            this.mvc.perform(
+                put("/processo/{id}", rdto.getId())
+                .content(asJsonString(rdto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andReturn().getResponse().getContentAsString(),
+            ProcessoDto.class
+        );
+        assertEquals(rdto.getId().longValue(), testeDto.getId().longValue());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER", username = "user", password ="batatas")
+    public void testarDeletarProcesso() throws Exception {
+        String result = this.mvc.perform(
+                post("/processo/")
+                    .content(asJsonString(processo))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn().getResponse().getContentAsString();
+        ProcessoDto rdto = objectMapper.readValue(result, ProcessoDto.class);
+
+        
+            this.mvc.perform(
+                delete("/processo/{id}", rdto.getId())
+                .content(asJsonString(rdto))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andReturn().getResponse().getContentAsString();
+        
+    }
+    
 
     public String asJsonString(final Object obj) {
         try {
