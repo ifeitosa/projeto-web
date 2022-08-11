@@ -48,7 +48,7 @@ public class Fase {
     
     
 
-    @OneToMany(targetEntity = InsumoConsumidoFase.class, mappedBy = "fase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = InsumoConsumidoFase.class, mappedBy = "fase", cascade = CascadeType.ALL)
     private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
     
 }

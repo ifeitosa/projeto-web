@@ -1,6 +1,7 @@
 package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JacksonInject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,8 +31,8 @@ public class ProcessoDto {
     private String nome;
     @NotNull @NotEmpty @NotBlank
     private String descricao;
-    @NotNull @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dataRegistro = LocalDateTime.now();
+    @NotNull 
+    private ZonedDateTime dataRegistro;
     @NotNull @NotEmpty @NotBlank
     private String responsavel;
     private List<FaseDto> fases = new ArrayList<>();

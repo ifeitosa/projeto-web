@@ -46,18 +46,31 @@ public class ProcessoService {
 
     @Transactional
     public ProcessoDto adicionarProcesso(ProcessoDto dto) {
-        Processo processo = this.repositorioProcesso.save(ProcessoMapper.toEntity(dto));
-        /* processo.setFases(processo.getFases().stream().map(f -> {
-            Fase g = this.repositorioFase.save(f);
-            g.setInsumosConsumidos(g.getInsumosConsumidos().stream()
-            .map((Function<? super InsumoConsumidoFase, ? extends InsumoConsumidoFase>) ic -> {
-                ic.setFase(g);
+        Processo processo = ProcessoMapper.toEntity(dto);
+        processo.setId(null);
+        processo = this.repositorioProcesso.save(processo);
+        processo.setFases(processo.getFases().stream().map(this.repositorioFase::save).peek(f -> {
+            f.setInsumosConsumidos(f.getInsumosConsumidos().map(ic -> {
+                ic.setFase(f);
                 ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
                 return this.repositorioInsumoConsumidoFase.save(ic);
             }).collect(Collectors.toUnmodifiableList()));
-            return g;
-        }).collect(Collectors.toUnmodifiableList())); */
-        return ProcessoMapper.fromEntity(this.em.merge(processo));
+        }).collect(Collectors.toUnmodifiableList()));
+        processo.getFases().stream().forEach(this.repositorioFase::save);
+        return ProcessoMapper.fromEntity(this.repositorioProcesso.saveAndFlush(processo));
+        /*
+         * processo.setFases(processo.getFases().stream().map(f -> {
+         * Fase g = this.repositorioFase.save(f);
+         * g.setInsumosConsumidos(g.getInsumosConsumidos().stream()
+         * .map((Function<? super InsumoConsumidoFase, ? extends InsumoConsumidoFase>)
+         * ic -> {
+         * ic.setFase(g);
+         * ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
+         * return this.repositorioInsumoConsumidoFase.save(ic);
+         * }).collect(Collectors.toUnmodifiableList()));
+         * return g;
+         * }).collect(Collectors.toUnmodifiableList()));
+         */
     }
 
     @Transactional
@@ -66,7 +79,8 @@ public class ProcessoService {
         Objects.requireNonNull(dto);
 
         Optional<Processo> processo = this.repositorioProcesso.findById(id);
-        if (!processo.isPresent()) return null;
+        if (!processo.isPresent())
+            return null;
         this.repositorioProcesso.deleteById(id);
         return Optional.ofNullable(processo.map(p -> {
             p.setId(id);
@@ -75,7 +89,7 @@ public class ProcessoService {
             p.setDescricao(dto.getDescricao());
             p.setResponsavel(dto.getResponsavel());
             p.setFases(dto.getFases().stream().map(ProcessoMapper::toEntity)
-                .collect(Collectors.toUnmodifiableList()));
+                    .collect(Collectors.toUnmodifiableList()));
             return ProcessoMapper.fromEntity(this.repositorioProcesso.save(p));
         }).get());
         /*

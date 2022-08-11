@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: br.com.letscode.supernova.batatas.modelos.ProcessoTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.527 s - in br.com.letscode.supernova.batatas.modelos.ProcessoTest
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.617 s <<< FAILURE! - in br.com.letscode.supernova.batatas.modelos.ProcessoTest
+encontrarProcessoComDataEntreDiasPrevistos  Time elapsed: 0.213 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [2022-08-08T01:30:34.084117075] did not match expected type [java.time.ZonedDateTime (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [2022-08-08T01:30:34.084117075] did not match expected type [java.time.ZonedDateTime (n/a)]
+	at br.com.letscode.supernova.batatas.modelos.ProcessoTest.encontrarProcessoComDataEntreDiasPrevistos(ProcessoTest.java:53)
+Caused by: java.lang.IllegalArgumentException: Parameter value [2022-08-08T01:30:34.084117075] did not match expected type [java.time.ZonedDateTime (n/a)]
+	at br.com.letscode.supernova.batatas.modelos.ProcessoTest.encontrarProcessoComDataEntreDiasPrevistos(ProcessoTest.java:53)
+

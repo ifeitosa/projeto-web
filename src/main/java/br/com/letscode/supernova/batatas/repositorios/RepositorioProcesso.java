@@ -1,6 +1,7 @@
 package br.com.letscode.supernova.batatas.repositorios;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,6 @@ public interface RepositorioProcesso extends JpaRepository<Processo, Long> {
 
     List<Processo> findProcessoByNomeContaining(String parte);
     List<Processo> findProcessoByDescricaoContaining(String parte);
-    List<Processo> findProcessoByDataRegistroBetween(LocalDateTime dataInicio, LocalDateTime dataFinal);
+    List<Processo> findProcessoByDataRegistroBetween(ZonedDateTime dataInicio, LocalDateTime dataFinal);
     
 }

@@ -3,6 +3,7 @@ package br.com.letscode.supernova.batatas.modelos;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class ProcessoTest {
     public void registrarEntidades() {
         repositorio.deleteAll();
         final Processo[] processos = {
-            new Processo(null, "Processo TESTE 1", "Descricação do processo", LocalDateTime.now().minusDays(5), "Agenor", new ArrayList<>()),
-            new Processo(null, "Processo 2", "Descrição do processo TESTE", LocalDateTime.now().minusDays(2), "Cláudio", new ArrayList<>()),
-            new Processo(null, "Processo 3", "Descrição TESTE do processo", LocalDateTime.now().minusDays(1), "Hugo", new ArrayList<>())
+            new Processo(null, "Processo TESTE 1", "Descricação do processo", ZonedDateTime.now().minusDays(5), "Agenor", new ArrayList<>()),
+            new Processo(null, "Processo 2", "Descrição do processo TESTE", ZonedDateTime.now().minusDays(2), "Cláudio", new ArrayList<>()),
+            new Processo(null, "Processo 3", "Descrição TESTE do processo", ZonedDateTime.now().minusDays(1), "Hugo", new ArrayList<>())
         };
         for(Processo p: processos) {
             repositorio.save(p);
@@ -49,7 +50,7 @@ public class ProcessoTest {
 
     @Test
     public void encontrarProcessoComDataEntreDiasPrevistos() {
-        List<Processo> processoTeste = repositorio.findProcessoByDataRegistroBetween(LocalDateTime.now().minusDays(3), LocalDateTime.now().minusDays(2));
+        List<Processo> processoTeste = repositorio.findProcessoByDataRegistroBetween(ZonedDateTime.now().minusDays(3), LocalDateTime.now().minusDays(2));
         assertEquals(1, processoTeste.size());
     }
     

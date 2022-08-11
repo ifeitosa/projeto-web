@@ -1,8 +1,7 @@
 package br.com.letscode.supernova.batatas.beans;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -17,7 +16,6 @@ import br.com.letscode.supernova.batatas.dto.InsumoConsumidoFaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoDto;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.mapper.ProcessoMapper;
-import br.com.letscode.supernova.batatas.modelos.Fase;
 import br.com.letscode.supernova.batatas.modelos.Processo;
 
 @Component
@@ -47,7 +45,7 @@ public class BeanInicializacao {
     private static final ProcessoDto processo = 
         new ProcessoDto(Long.valueOf(3), "Processo de teste", 
                 "Este é um processo de teste", 
-                LocalDateTime.now(), 
+                ZonedDateTime.now(), 
                 "Italo", 
                 List.of(fases));
 

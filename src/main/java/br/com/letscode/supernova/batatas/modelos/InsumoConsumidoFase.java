@@ -36,7 +36,7 @@ import org.hibernate.type.LongType;
 public class InsumoConsumidoFase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = {})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Fase fase;
     @OneToOne(cascade = {CascadeType.ALL})
     private Insumo insumo;

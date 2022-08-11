@@ -7,14 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -61,7 +60,7 @@ public class ProcessoRestControllerTest {
     private static final ProcessoDto processo = 
         new ProcessoDto( null, "Processo de teste", 
                 "Este é um processo de teste", 
-                LocalDateTime.now(), 
+                ZonedDateTime.now(), 
                 "Italo", 
                 List.of(fases[0], fases[1], fases[2]));
 
@@ -81,14 +80,14 @@ public class ProcessoRestControllerTest {
 
     @Test
     @WithMockUser(roles = "USER", username = "user", password= "batatas")
-    public void testarCriacao() throws UnsupportedEncodingException, Exception {
+    public void testarCriacao() throws Exception {
+        this.objectMapper.findAndRegisterModules();
         String s;
         System.out.println("[>>>>>]\t\t" + (s = asJsonString(processo)));
         String result = this.mvc.perform(
                 post("/processo/")
                     .content(asJsonString(processo))
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .accept(MediaType.APPLICATION_JSON_VALUE))
+                    .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andDo(MockMvcResultHandlers.print())
