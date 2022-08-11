@@ -2,7 +2,6 @@ package br.com.letscode.supernova.batatas.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;

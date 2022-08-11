@@ -3,7 +3,6 @@ package br.com.letscode.supernova.batatas.modelos;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

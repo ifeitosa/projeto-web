@@ -1,6 +1,5 @@
 package br.com.letscode.supernova.batatas.repositorios;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
