@@ -1,5 +1,7 @@
 package br.com.letscode.supernova.batatas.dto;
 
+import java.time.ZonedDateTime;
+
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -15,13 +17,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class InsumoDto {
-    Long id;
-    @NotNull
-    private String nome;
-    @NotNull
-    private String unidadeMedida;
-    @NotNull
-    private Double estoqueMinimo;
+public class ItemEstoqueInsumoDto {
+    private Long lote;
+    private InsumoDto insumo;
     
+    private Double quantidade;
+    
+    private ZonedDateTime dataAquisicao;
+    
+    private ZonedDateTime dataValidade;
+    
+    private String qualidade;
 }

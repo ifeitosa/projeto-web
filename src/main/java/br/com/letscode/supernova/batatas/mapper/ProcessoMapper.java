@@ -13,6 +13,10 @@ import br.com.letscode.supernova.batatas.modelos.Processo;
 
 public class ProcessoMapper {
 
+    private ProcessoMapper() {
+
+    }
+
     public static ProcessoDto fromEntity(Processo p) {
         return new ProcessoDto(p.getId(), p.getNome(), p.getDescricao(), p.getDataRegistro(), p.getResponsavel(),
                 p.getFases().stream().map(f -> ProcessoMapper.fromEntity(f)).collect(Collectors.toList()));
@@ -26,7 +30,7 @@ public class ProcessoMapper {
     }
 
     public static InsumoDto fromEntity(Insumo in) {
-        return new InsumoDto(in.getNome(), in.getUnidadeMedida(), in.getEstoqueMinimo());
+        return new InsumoDto(in.getId(), in.getNome(), in.getUnidadeMedida(), in.getEstoqueMinimo());
     }
 
     public static InsumoConsumidoFaseDto fromEntity(InsumoConsumidoFase ic) {

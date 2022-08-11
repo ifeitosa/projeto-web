@@ -44,10 +44,10 @@ public class ProcessoRestControllerTest {
     ObjectMapper objectMapper;
 
     private static final InsumoDto[] insumos = {
-            new InsumoDto("Insumo 1", "kg", 10.0D),
-            new InsumoDto("Insumo 2", "L", 1.0D),
-            new InsumoDto("Insumo 3", "g", 100.0D),
-            new InsumoDto("Insumo 4", "m", 5.0D)
+            new InsumoDto(null, "Insumo 1", "kg", 10.0D),
+            new InsumoDto(null, "Insumo 2", "L", 1.0D),
+            new InsumoDto(null, "Insumo 3", "g", 100.0D),
+            new InsumoDto(null, "Insumo 4", "m", 5.0D)
     };
     private static final InsumoConsumidoFaseDto[] consumidos = {
             new InsumoConsumidoFaseDto(insumos[0], 4.0D, "kg"),
