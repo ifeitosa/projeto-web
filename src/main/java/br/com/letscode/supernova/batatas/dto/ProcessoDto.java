@@ -1,6 +1,5 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.OptBoolean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,13 +22,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcessoDto {
-    @NotNull @Positive
+    @Positive
     private Long id;
     @NotNull @NotEmpty @NotBlank
     private String nome;
     @NotNull @NotEmpty @NotBlank
     private String descricao;
-    @NotNull 
+    @NotNull @JsonFormat(lenient = OptBoolean.TRUE)
     private ZonedDateTime dataRegistro;
     @NotNull @NotEmpty @NotBlank
     private String responsavel;
