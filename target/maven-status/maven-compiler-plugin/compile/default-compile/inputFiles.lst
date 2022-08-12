@@ -1,4 +1,8 @@
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\repositorios\RepositorioProdutoVenda.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ProdutoFase.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ItemProduzidoExecucao.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ExecucaoFaseProcessamento.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ItemEstoqueInsumoConsumido.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\repositorios\RepositorioInsumo.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\mapper\ProcessoMapper.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\rest\ProcessoRestController.java
@@ -11,12 +15,14 @@ C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\super
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ProdutoVenda.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\dto\ProcessoDto.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\service\ProcessoService.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\LoteProdutoVenda.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\BatatasApplication.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\beans\BeanInicializacao.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\dto\InsumoDto.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\InsumoConsumidoFase.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\Insumo.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\service\InsumoService.java
+C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\modelos\ItemEstoqueInsumoProduzido.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\dto\FaseDto.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\dto\ItemEstoqueInsumoDto.java
 C:\Users\F4463466\lets-code\T868\projeto-web\src\main\java\br\com\letscode\supernova\batatas\repositorios\RepositorioFase.java
