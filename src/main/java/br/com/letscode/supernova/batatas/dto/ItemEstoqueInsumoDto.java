@@ -2,8 +2,6 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.time.ZonedDateTime;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
