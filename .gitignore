@@ -32,3 +32,14 @@ target/**
 .vscode/**
 *.drawio.*
 *.mv.db
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+target/surefire-reports/br.com.letscode.supernova.batatas.BatatasApplicationTests.txt
+target/surefire-reports/br.com.letscode.supernova.batatas.modelos.InsumoTest.txt
+target/surefire-reports/br.com.letscode.supernova.batatas.modelos.ProcessoTest.txt
+target/surefire-reports/br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest.txt
+target/surefire-reports/TEST-br.com.letscode.supernova.batatas.BatatasApplicationTests.xml
+target/surefire-reports/TEST-br.com.letscode.supernova.batatas.modelos.InsumoTest.xml
+target/surefire-reports/TEST-br.com.letscode.supernova.batatas.modelos.ProcessoTest.xml
+target/surefire-reports/TEST-br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest.xml
