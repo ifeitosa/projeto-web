@@ -1,8 +1,7 @@
 package br.com.letscode.supernova.batatas.beans;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
@@ -43,7 +42,7 @@ public class BeanInicializacao {
     };
     private static final ProcessoDto processo = new ProcessoDto(Long.valueOf(3), "Processo de teste",
             "Este é um processo de teste",
-            ZonedDateTime.now(),
+            LocalDate.now(),
             "Italo",
             List.of(fases));
 
@@ -53,7 +52,7 @@ public class BeanInicializacao {
         
         /*
          * Processo processo = new Processo(null, "Processo de teste",
-         * "Este é um teste de processo", LocalDateTime.now(),
+         * "Este é um teste de processo", LocalDate.now(),
          * "Italo", new ArrayList<>());
          * processo = this.repoProc.save(processo);
          * 

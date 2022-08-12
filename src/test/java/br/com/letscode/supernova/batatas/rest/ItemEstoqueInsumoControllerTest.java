@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -74,10 +74,10 @@ public class ItemEstoqueInsumoControllerTest {
 
     @Test
     public void testarObterItensEstoque() {
-        ItemEstoqueInsumoDto dto = new ItemEstoqueInsumoDto(null, insumoDto, 100.0D, ZonedDateTime.now(),
-                ZonedDateTime.now().plusMonths(3), "premium");
-        ItemEstoqueInsumoDto dto2 = new ItemEstoqueInsumoDto(null, insumoDto2, 90.0D, ZonedDateTime.now().minusDays(15),
-                ZonedDateTime.now().plusDays(75), "premium");
+        ItemEstoqueInsumoDto dto = new ItemEstoqueInsumoDto(null, insumoDto, 100.0D, LocalDate.now(),
+                LocalDate.now().plusMonths(3), "premium");
+        ItemEstoqueInsumoDto dto2 = new ItemEstoqueInsumoDto(null, insumoDto2, 90.0D, LocalDate.now().minusDays(15),
+                LocalDate.now().plusDays(75), "premium");
 
         try {
             dto = objectMapper.readValue(mvc
@@ -97,10 +97,9 @@ public class ItemEstoqueInsumoControllerTest {
                     .andExpect(status().isOk())
                     .andReturn().getResponse().getContentAsString();
 
-            assertTrue(retorno.length() > 0);
-            
-            List<ItemEstoqueInsumoDto> lista = objectMapper.readerForListOf(ItemEstoqueInsumoDto.class).readValue(retorno);
-            
+            List<ItemEstoqueInsumoDto> lista = objectMapper.readerForListOf(ItemEstoqueInsumoDto.class)
+                    .readValue(retorno);
+
             assertTrue(lista.contains(dto));
             assertTrue(lista.contains(dto2));
         } catch (JsonMappingException e) {

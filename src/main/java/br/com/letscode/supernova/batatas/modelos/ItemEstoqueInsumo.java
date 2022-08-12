@@ -1,6 +1,6 @@
 package br.com.letscode.supernova.batatas.modelos;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,8 +32,8 @@ public class ItemEstoqueInsumo {
     private Insumo insumo;
 
     private Double quantidade;
-    private ZonedDateTime dataAquisicao;
-    private ZonedDateTime dataValidade;
+    private LocalDate dataAquisicao;
+    private LocalDate dataValidade;
     private String qualidade;
     
 }

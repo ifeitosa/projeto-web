@@ -1,6 +1,6 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -13,14 +13,14 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode //(exclude = {"dataAquisicao", "dataValidade"})
 @ToString
 public class ItemEstoqueInsumoDto {
     private Long lote;
     private InsumoDto insumo;
 
     private Double quantidade;
-    private ZonedDateTime dataAquisicao;
-    private ZonedDateTime dataValidade;
+    private LocalDate dataAquisicao;
+    private LocalDate dataValidade;
     private String qualidade;
 }

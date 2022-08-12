@@ -1,6 +1,6 @@
 package br.com.letscode.supernova.batatas.service;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,13 +24,13 @@ public class ItemEstoqueInsumoService {
     private RepositorioInsumo repositorioInsumo;
 
     public List<ItemEstoqueInsumoDto> obterItensDoEstoqueAtivos() {
-        final ZonedDateTime agora = ZonedDateTime.now();
+        final LocalDate agora = LocalDate.now();
         return this.repositorioItens.findByQuantidadeIsGreaterThanAndDataValidadeIsGreaterThanEqual(0.0D, agora).stream()
             .map(ItemEstoqueInsumoMapper::fromEntity).collect(Collectors.toList());
     }
 
     public List<ItemEstoqueInsumoDto> obterItensDoEstoqueVencidos() {
-        final ZonedDateTime agora = ZonedDateTime.now();
+        final LocalDate agora = LocalDate.now();
         return this.repositorioItens.encontrarItensComDataValidadeVencida(agora).stream()
             .map(ItemEstoqueInsumoMapper::fromEntity).collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public class ItemEstoqueInsumoService {
     }
 
     public List<ItemEstoqueInsumoDto> obterItensSemEstoqueMinimo() {
-        final ZonedDateTime agora = ZonedDateTime.now();
+        final LocalDate agora = LocalDate.now();
         return this.repositorioItens.encontrarItensSemEstoqueMinimo(agora).stream()
             .map(ItemEstoqueInsumoMapper::fromEntity).collect(Collectors.toList());
     }

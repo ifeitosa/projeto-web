@@ -43,3 +43,4 @@ target/surefire-reports/TEST-br.com.letscode.supernova.batatas.BatatasApplicatio
 target/surefire-reports/TEST-br.com.letscode.supernova.batatas.modelos.InsumoTest.xml
 target/surefire-reports/TEST-br.com.letscode.supernova.batatas.modelos.ProcessoTest.xml
 target/surefire-reports/TEST-br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVendaTest.xml
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst

@@ -1,6 +1,6 @@
 package br.com.letscode.supernova.batatas.modelos;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class Processo {
     @NotNull @NotEmpty @NotBlank @Column(nullable = false)
     private String descricao;
     @NotNull @Column(nullable = false, updatable = false)
-    private ZonedDateTime dataRegistro = ZonedDateTime.now();
+    private LocalDate dataRegistro;
     @NotNull @NotEmpty @NotBlank @Column(nullable = false, updatable = false)
     private String responsavel;
     @ElementCollection(fetch = FetchType.EAGER) @CollectionTable(name = "fases_processo", joinColumns =  @JoinColumn(name = "processo", table = "FASE"))

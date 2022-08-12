@@ -1,6 +1,7 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode //(exclude = "dataRegistro")
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +34,7 @@ public class ProcessoDto {
     @NotNull @NotEmpty @NotBlank
     private String descricao;
     @NotNull @JsonFormat(lenient = OptBoolean.TRUE)
-    private ZonedDateTime dataRegistro;
+    private LocalDate dataRegistro;
     @NotNull @NotEmpty @NotBlank
     private String responsavel;
     private List<FaseDto> fases = new ArrayList<>();
