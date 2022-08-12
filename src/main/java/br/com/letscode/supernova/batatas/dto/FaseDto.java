@@ -1,6 +1,5 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -35,6 +34,8 @@ public class FaseDto {
     private Double quantidadeProduzida;
     
     @NotNull
-    private List<InsumoConsumidoFaseDto> insumosConsumidos = new ArrayList<>();
+    private List<InsumoConsumidoFaseDto> insumosConsumidos;
+    @NotNull
+    private List<InsumoProduzidoFaseDto> insumoProduzidos;
     
 }

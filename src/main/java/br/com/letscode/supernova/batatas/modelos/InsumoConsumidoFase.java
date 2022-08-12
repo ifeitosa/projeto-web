@@ -6,10 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,9 +29,9 @@ public class InsumoConsumidoFase {
     private Fase fase; 
     @ManyToOne
     private Insumo insumo;
-    @Positive @NotNull @Column(nullable = false)
+    @Column(nullable = false)
     private Double quantidadeConsumida;
-    @NotNull @NotBlank @NotEmpty @Column(nullable = false)
+    @Column(nullable = false)
     private String unidadeConsumo;
 
     

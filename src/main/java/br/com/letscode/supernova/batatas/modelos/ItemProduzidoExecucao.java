@@ -1,5 +1,7 @@
 package br.com.letscode.supernova.batatas.modelos;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +33,8 @@ public class ItemProduzidoExecucao {
 
     @OneToOne(targetEntity = LoteProdutoVenda.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private LoteProdutoVenda loteProdutoVenda;
+
+    private LocalDate dataRegistro;
 
     private Double quantidadeProduzida;
     private String unidadeProducao;

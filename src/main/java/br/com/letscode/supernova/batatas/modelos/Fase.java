@@ -1,5 +1,6 @@
 package br.com.letscode.supernova.batatas.modelos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "insumosConsumidos")
+@EqualsAndHashCode(exclude = {"insumosConsumidos", "insumosProduzidos"})
 @ToString
 @Entity
 public class Fase {
@@ -49,6 +50,9 @@ public class Fase {
     
     //@Cascade({CascadeType.ALL})
     @OneToMany(mappedBy = "fase", cascade = {CascadeType.ALL})
-    private List<InsumoConsumidoFase> insumosConsumidos;
+    private List<InsumoConsumidoFase> insumosConsumidos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fase", cascade = {CascadeType.ALL})
+    private List<InsumoProduzidoFase> insumosProduzidos = new ArrayList<>();
     
 }

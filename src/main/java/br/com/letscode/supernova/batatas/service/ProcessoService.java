@@ -16,6 +16,7 @@ import br.com.letscode.supernova.batatas.modelos.Processo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioFase;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumoConsumidoFase;
+import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumoProduzidoFase;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioProcesso;
 
 @Service
@@ -28,6 +29,8 @@ public class ProcessoService {
     @Autowired
     private RepositorioInsumoConsumidoFase repositorioInsumoConsumido;
     @Autowired
+    private RepositorioInsumoProduzidoFase repositorioInsumoProduzido;
+    @Autowired
     private RepositorioInsumo repositorioInsumo;
 
     @Transactional
@@ -36,9 +39,14 @@ public class ProcessoService {
         processo.setId(null);
         processo.setFases(processo.getFases().stream().map(this.repositorioFase::save).map(f -> {
             f.setInsumosConsumidos(f.getInsumosConsumidos().stream().map(ic -> {
-
+                ic.setFase(f);
                 ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
                 return this.repositorioInsumoConsumido.save(ic);
+            }).collect(Collectors.toList()));
+            f.setInsumosProduzidos(f.getInsumosProduzidos().stream().map(ic -> {
+                ic.setFase(f);
+                ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
+                return this.repositorioInsumoProduzido.save(ic);
             }).collect(Collectors.toList()));
             return this.repositorioFase.save(f);
         }).collect(Collectors.toList()));
@@ -63,8 +71,13 @@ public class ProcessoService {
                         ic.setInsumo(this.repositorioInsumo.save(ic.getInsumo()));
                         return this.repositorioInsumoConsumido.save(ic);
                     }).collect(Collectors.toList()));
+                    f.setInsumosProduzidos(f.getInsumosProduzidos().stream().map(ic -> {
+                        ic.setInsumo((this.repositorioInsumo.save(ic.getInsumo())));
+                        return this.repositorioInsumoProduzido.save(ic);
+                    }).collect(Collectors.toList()));
                     return this.repositorioFase.save(f);
                 }).collect(Collectors.toList()));
+                
                 return ProcessoMapper.fromEntity(this.repositorioProcesso.save(p));
             }).get();
         }
@@ -86,6 +99,14 @@ public class ProcessoService {
     }
 
     public void deletarProcesso(Long id) {
-        this.repositorioProcesso.deleteById(id);
+        Optional<Processo> processo = this.repositorioProcesso.findById(id);
+        processo.ifPresent(p -> {
+            p.getFases().stream().forEach(f -> {
+                f.getInsumosProduzidos().stream().forEach(ic -> this.repositorioInsumo.delete(ic.getInsumo()));
+                f.getInsumosConsumidos().stream().forEach(ic -> this.repositorioInsumo.delete(ic.getInsumo()));
+                this.repositorioFase.delete(f);
+            });
+            this.repositorioProcesso.delete(p);
+        });
     }
 }

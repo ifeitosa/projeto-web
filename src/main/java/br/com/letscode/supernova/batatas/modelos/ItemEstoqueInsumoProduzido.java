@@ -31,7 +31,7 @@ public class ItemEstoqueInsumoProduzido {
     ItemEstoqueInsumo itemEstoqueInsumo;
 
     @OneToOne(targetEntity = ExecucaoFaseProcessamento.class)
-    private ExecucaoFaseProcessamento execucao;
+    private ExecucaoFaseProcessamento execucaoFaseProcessamento;
 
     LocalDateTime dataRegistro;
 
