@@ -18,12 +18,9 @@ import lombok.ToString;
 public class ItemEstoqueInsumoDto {
     private Long lote;
     private InsumoDto insumo;
-    
+
     private Double quantidade;
-    
     private ZonedDateTime dataAquisicao;
-    
     private ZonedDateTime dataValidade;
-    
     private String qualidade;
 }

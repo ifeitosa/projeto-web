@@ -4,10 +4,8 @@ import java.util.stream.Collectors;
 
 import br.com.letscode.supernova.batatas.dto.FaseDto;
 import br.com.letscode.supernova.batatas.dto.InsumoConsumidoFaseDto;
-import br.com.letscode.supernova.batatas.dto.InsumoDto;
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.modelos.Fase;
-import br.com.letscode.supernova.batatas.modelos.Insumo;
 import br.com.letscode.supernova.batatas.modelos.InsumoConsumidoFase;
 import br.com.letscode.supernova.batatas.modelos.Processo;
 
@@ -19,7 +17,7 @@ public class ProcessoMapper {
 
     public static ProcessoDto fromEntity(Processo p) {
         return new ProcessoDto(p.getId(), p.getNome(), p.getDescricao(), p.getDataRegistro(), p.getResponsavel(),
-                p.getFases().stream().map(f -> ProcessoMapper.fromEntity(f)).collect(Collectors.toList()));
+                p.getFases().stream().map(ProcessoMapper::fromEntity).collect(Collectors.toList()));
     }
 
     public static FaseDto fromEntity(Fase f) {
@@ -29,12 +27,9 @@ public class ProcessoMapper {
                         .collect(Collectors.toList()));
     }
 
-    public static InsumoDto fromEntity(Insumo in) {
-        return new InsumoDto(in.getId(), in.getNome(), in.getUnidadeMedida(), in.getEstoqueMinimo());
-    }
 
     public static InsumoConsumidoFaseDto fromEntity(InsumoConsumidoFase ic) {
-        return new InsumoConsumidoFaseDto(ProcessoMapper.fromEntity(ic.getInsumo()), ic.getQuantidadeConsumida(),
+        return new InsumoConsumidoFaseDto(InsumoMapper.fromEntity(ic.getInsumo()), ic.getQuantidadeConsumida(),
                 ic.getUnidadeConsumo());
     }
 
@@ -53,12 +48,7 @@ public class ProcessoMapper {
     }
 
     public static InsumoConsumidoFase toEntity(InsumoConsumidoFaseDto dto, Fase fase) {
-        return new InsumoConsumidoFase(null, fase, ProcessoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(),
+        return new InsumoConsumidoFase(null, fase, InsumoMapper.toEntity(dto.getInsumo()), dto.getQuantidadeConsumida(),
                 dto.getUnidadeConsumo());
     }
-
-    public static Insumo toEntity(InsumoDto dto) {
-        return new Insumo(null, dto.getNome(), dto.getUnidadeMedida(), dto.getEstoqueMinimo());
-    }
-
 }

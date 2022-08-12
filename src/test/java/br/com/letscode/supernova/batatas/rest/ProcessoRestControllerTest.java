@@ -35,6 +35,7 @@ import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@WithMockUser(value = "USER", username = "user", password = "batatas")
 public class ProcessoRestControllerTest {
 
     @Autowired
@@ -68,8 +69,18 @@ public class ProcessoRestControllerTest {
             List.of(fases[0], fases[1], fases[2]));
 
     @Test
-    @WithMockUser(value = "USER", username = "user", password = "batatas")
+    
     public void testarConsultarATodos() throws UnsupportedEncodingException, Exception {
+
+        ProcessoDto dto = objectMapper.readValue(this.mvc.perform(
+                post("/processo/")
+                        .content(asJsonString(processo))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn().getResponse().getContentAsString(), ProcessoDto.class);
+        assertNotNull(dto.getId());
 
         String result = this.mvc
                 .perform(get("/processo").secure(false).accept(MediaType.APPLICATION_JSON_VALUE)
@@ -78,8 +89,9 @@ public class ProcessoRestControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn().getResponse().getContentAsString();
-        System.out.println("[>>>] " + result);
-        assertTrue(result.length() > 0);
+        List<ProcessoDto> lista = objectMapper.readerForListOf(ProcessoDto.class).readValue(result);
+        assertTrue(lista.size() > 0);
+        assertTrue(lista.contains(dto));
     }
 
     @Test

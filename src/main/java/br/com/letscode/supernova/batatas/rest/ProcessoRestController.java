@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.service.ProcessoService;
 
@@ -33,13 +30,10 @@ import br.com.letscode.supernova.batatas.service.ProcessoService;
 @RequestMapping(path = "/processo")
 public class ProcessoRestController {
 
+    @Autowired
     private ProcessoService service;
-    private ObjectMapper objectMapper;
+
     
-    public ProcessoRestController(@Autowired ProcessoService service, ObjectMapper objectMapper) {
-        this.service = service;
-        this.objectMapper = objectMapper;
-    }
 
     @GetMapping
     public List<ProcessoDto> obterProcessos() {
@@ -47,9 +41,8 @@ public class ProcessoRestController {
     }
 
     @PostMapping
-    public ProcessoDto adicionarProceso(@Valid @RequestBody ProcessoDto dto) throws JsonProcessingException {
-        ProcessoDto rdto = this.service.adicionarProcesso(dto);
-        return rdto;
+    public ProcessoDto adicionarProceso(@Valid @RequestBody ProcessoDto dto) {
+        return this.service.adicionarProcesso(dto);
     }
 
     @PutMapping(path = "/{id:\\d+}")
@@ -72,7 +65,7 @@ public class ProcessoRestController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> tratarExcecaoValidacao(MethodArgumentNotValidException ex) {
         Map<String, String> erros = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((erro) -> {
+        ex.getBindingResult().getAllErrors().forEach(erro -> {
             String campo = ((FieldError) erro).getField();
             String mensagem = erro.getDefaultMessage();
             erros.put(campo, mensagem);

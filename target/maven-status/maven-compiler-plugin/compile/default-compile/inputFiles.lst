@@ -21,6 +21,7 @@
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/mapper/ItemEstoqueInsumoMapper.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/modelos/Fase.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/service/ProcessoService.java
+/home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/mapper/InsumoMapper.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/modelos/ItemEstoqueInsumo.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/repositorios/RepositorioInsumo.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/mapper/ProcessoMapper.java
