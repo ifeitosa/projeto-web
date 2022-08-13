@@ -1,7 +1,5 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,10 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ExecucaoFaseProcessamentoDto {
-    
-    private Long OS;
-    private IdFaseDto fase;
-    private LocalDate dataInicio;
-    private LocalDate dataTermino;
+public class IdFaseDto {
+    private Long id;
 }

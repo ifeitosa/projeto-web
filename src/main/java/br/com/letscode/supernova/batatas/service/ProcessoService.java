@@ -99,7 +99,8 @@ public class ProcessoService {
     }
 
     public void deletarProcesso(Long id) {
-        Optional<Processo> processo = this.repositorioProcesso.findById(id);
+        this.repositorioProcesso.deleteById(id);
+        /* Optional<Processo> processo = this.repositorioProcesso.findById(id);
         processo.ifPresent(p -> {
             p.getFases().stream().forEach(f -> {
                 f.getInsumosProduzidos().stream().forEach(ic -> this.repositorioInsumo.delete(ic.getInsumo()));
@@ -107,6 +108,6 @@ public class ProcessoService {
                 this.repositorioFase.delete(f);
             });
             this.repositorioProcesso.delete(p);
-        });
+        }); */
     }
 }

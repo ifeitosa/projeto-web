@@ -49,14 +49,19 @@ public class ProcessoRestControllerTest {
                         new InsumoDto(null, "Insumo 1", "kg", 10.0D),
                         new InsumoDto(null, "Insumo 2", "L", 1.0D),
                         new InsumoDto(null, "Insumo 3", "g", 100.0D),
-                        new InsumoDto(null, "Insumo 4", "m", 5.0D)
+                        new InsumoDto(null, "Insumo 4", "m", 5.0D),
+                        new InsumoDto(null, "Insumo 5", "m", 18.9D),
+                        new InsumoDto(null, "Insumo 6", "L", 91.2D),
+                        new InsumoDto(null, "Insumo 7", "KL", 12.2D)
         };
         private static final InsumoConsumidoFaseDto[] consumidos = {
                         new InsumoConsumidoFaseDto(insumos[0], 4.0D, "kg"),
                         new InsumoConsumidoFaseDto(insumos[1], 3.0D, "mL"),
                         new InsumoConsumidoFaseDto(insumos[2], 18.0D, "g"),
                         new InsumoConsumidoFaseDto(insumos[3], 2.1D, "m")
-        };private static final InsumoProduzidoFaseDto[] produzidos = {
+        };
+        
+        private static final InsumoProduzidoFaseDto[] produzidos = {
                 new InsumoProduzidoFaseDto(insumos[4], 18.9D, "L"),
                 new InsumoProduzidoFaseDto(insumos[5], 17.3D, "m"),
                 new InsumoProduzidoFaseDto(insumos[6], 18.3D, "g")
@@ -65,7 +70,7 @@ public class ProcessoRestControllerTest {
             private static final FaseDto[] fases = {
                     new FaseDto(1, "Fase 1", "Instrução da fase 1", "kg", 100.0D, List.of(consumidos[0]), List.of(produzidos[0])),
                     new FaseDto(2, "Fase 2", "Instrução da fase 2", "g", 3.2D, List.of(consumidos[1], consumidos[2]), List.of(produzidos[1])),
-                    new FaseDto(3, "Fase 3", "Instrução da fase 3", "m", 2.1D, List.of(consumidos[3]), List.of(produzidos[3]))
+                    new FaseDto(3, "Fase 3", "Instrução da fase 3", "m", 2.1D, List.of(consumidos[3]), List.of(produzidos[2]))
             };
         private static final ProcessoDto processo = new ProcessoDto(null, "Processo de teste",
                         "Este é um processo de teste",
@@ -211,16 +216,17 @@ public class ProcessoRestControllerTest {
                 String resultado = "";
                 try {
                         resultado = this.mvc.perform(
-                                        delete("/processo/{id}", rdto.getId())
-                                                        .content(asJsonString(rdto))
-                                                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                                        // .andExpect(status().isOk())
+                                        delete("/processo/{id}", rdto.getId()))
+                                        .andExpect(status().isOk())
                                         .andReturn().getResponse().getContentAsString();
                 } catch (JsonMappingException ex) {
                         System.out.println(ex.getMessage());
                         System.out.println("[>>>] Retorno: " + resultado);
                         fail();
                 }
+
+                this.mvc.perform(get("/processo/{id}", rdto.getId()))
+                        .andExpect(status().isNotFound());
 
         }
 

@@ -29,7 +29,7 @@ public class ItemProduzidoExecucao {
     private Long id;
 
     @ManyToOne(targetEntity = ExecucaoFaseProcessamento.class)
-    private ExecucaoFaseProcessamento execucao;
+    private ExecucaoFaseProcessamento execucaoFaseProcessamento;
 
     @OneToOne(targetEntity = LoteProdutoVenda.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private LoteProdutoVenda loteProdutoVenda;

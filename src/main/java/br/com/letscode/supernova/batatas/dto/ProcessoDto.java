@@ -1,7 +1,6 @@
 package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

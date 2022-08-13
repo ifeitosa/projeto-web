@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,9 +52,14 @@ public class ProcessoRestController {
     }
 
     @GetMapping(path = "/{id:\\d+}")
-    public Optional<ProcessoDto> obterProcesso(@PathVariable Long id) {
+    public ResponseEntity<ProcessoDto> obterProcesso(@PathVariable Long id) {
         Objects.requireNonNull(id);
-        return this.service.obterProcesso(id);
+        Optional<ProcessoDto> dto = this.service.obterProcesso(id);
+        if (dto.isPresent()) {
+            return ResponseEntity.ok(dto.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id:\\d+}")
