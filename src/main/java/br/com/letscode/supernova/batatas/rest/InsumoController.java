@@ -3,7 +3,10 @@ package br.com.letscode.supernova.batatas.rest;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,21 +25,25 @@ public class InsumoController {
     @Autowired
     private InsumoService service;
     
+    @Cacheable(cacheNames = "obterInsumos")
     @GetMapping("/{id:\\d+}")
     public Optional<InsumoDto> obterInsumo(@PathVariable Long id) {
         return this.service.obterInsumo(id);
     }
 
+    @Cacheable(cacheNames = "obterInsumos")
     @GetMapping
     public List<InsumoDto> obterInsumos() {
         return this.service.obterInsumos();
     }
 
+    @CacheEvict(cacheNames = "obterInsumos")
     @PutMapping("/{id:\\d+}")
     public Optional<InsumoDto> corrigirInsumo(@PathVariable Long id, @RequestBody InsumoDto dto) {
         return this.service.corrigirInsumo(id, dto);
     }
 
+    @CacheEvict(cacheNames = "obterInsumos")
     @PostMapping
     public Optional<InsumoDto> inserirInsumo(@RequestBody InsumoDto insumo) {
         return this.service.inserir(insumo);

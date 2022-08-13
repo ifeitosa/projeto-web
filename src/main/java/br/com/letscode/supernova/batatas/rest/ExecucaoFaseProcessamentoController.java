@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,32 +24,34 @@ public class ExecucaoFaseProcessamentoController {
 
     @Autowired ExecucaoFaseProcessamentoService service;
 
+    @Cacheable(cacheNames = "obterExecucaoFaseProcessamento")
     @GetMapping
     public List<ExecucaoFaseProcessamentoDto> obter(@RequestParam("inicio") LocalDate inicio, @RequestParam("termino") LocalDate termino) {
         return this.service.encontrarPelaDataEntre(inicio, termino);
     }
 
+    @Cacheable(cacheNames = "obterExecucaoFaseProcessamento")
     @GetMapping("/{id}")
     public ExecucaoFaseProcessamentoDto encontrarPeloId(@PathVariable Long id) {
         return this.service.encontrarPeloId(id);
     }
 
+    @Cacheable(cacheNames = "obterExecucaoFaseProcessamentoPelaFase")
     @GetMapping("/fase/{id}")
     public List<ExecucaoFaseProcessamentoDto> encontrarPelaFase(@PathVariable Long id) {
         return this.service.encontrarPelaFase(id);
     }
 
+    @CacheEvict(cacheNames = {"obterExecucaoFaseProcessamento", "obterExecucaoFaseProcessamentoPelaFase"})
     @PostMapping
     public ExecucaoFaseProcessamentoDto inserir(@RequestBody ExecucaoFaseProcessamentoDto dto) {
         return this.service.inserirExecucaoFaseProcessamento(dto);
     }
 
+    @CacheEvict(cacheNames = {"obterExecucaoFaseProcessamento", "obterExecucaoFaseProcessamentoPelaFase"})
     @PutMapping("/{id:\\d+}")
     public ExecucaoFaseProcessamentoDto corrigir(@PathVariable Long id, ExecucaoFaseProcessamentoDto dto) {
         dto.setOS(id);
         return this.service.alterarExecucaoFaseProcessamento(dto);
     }
-
-
-    
 }

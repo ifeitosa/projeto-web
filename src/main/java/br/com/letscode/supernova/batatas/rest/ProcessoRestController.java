@@ -9,6 +9,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -34,8 +37,7 @@ public class ProcessoRestController {
     @Autowired
     private ProcessoService service;
 
-    
-
+    @Cacheable(cacheNames = "obterProcessos")
     @GetMapping
     public List<ProcessoDto> obterProcessos() {
         return this.service.obterProcessos();
@@ -46,11 +48,13 @@ public class ProcessoRestController {
         return this.service.adicionarProcesso(dto);
     }
 
+    @CacheEvict(cacheNames = "obterProcessos")
     @PutMapping(path = "/{id:\\d+}")
     public ProcessoDto corrigirProcesso(@PathVariable Long id, @Valid @RequestBody ProcessoDto dto) {
         return this.service.corrigirProcesso(id, dto);
     }
 
+    @Cacheable(cacheNames = "obterProcessos")
     @GetMapping(path = "/{id:\\d+}")
     public ResponseEntity<ProcessoDto> obterProcesso(@PathVariable Long id) {
         Objects.requireNonNull(id);
@@ -62,6 +66,7 @@ public class ProcessoRestController {
         }
     }
 
+    @CacheEvict(cacheNames = "obterProcessos")
     @DeleteMapping("/{id:\\d+}")
     public void deletarProcesso(@PathVariable Long id) {
         this.service.deletarProcesso(id);

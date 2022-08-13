@@ -28,3 +28,8 @@ registro no sistema e responsável pelo processo. Um processo é uma sequência 
 
   A equipe de fábrica realiza as fases dos processos. Devem ser registradas o início e o término das execuções das fases para controle das atividades.
   Na execução de cada fase devem ser registrados os lotes dos itens do estoque de insumos consumidos e suas quantidades. As fases que produzem insumos devem registrar um novo item de estoque de insumo com sua respectiva data de fabricação (a data de término da execução da fase) e sua validade, determinada pelo pessoal da equipe de fabricação. As fases que produzem itens de venda, o lote do item para venda, a quantidade de itens de venda produzidos (e respectiva unidade de venda) e o preço de referência para venda, sua data de fabricação (data de término da execução da fase) e a data de validade, também apurada pelo pessoal da equipe de fabricação.
+
+# Mapeamentos da API
+
+  Endereço em http://localhost:8080/swagger-ui.html.
+  
