@@ -1,7 +1,5 @@
 package br.com.letscode.supernova.batatas.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,10 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ItemEstoqueInsumoConsumidoDto {
-    private Long id;
-    private ItemEstoqueInsumoDto itemEstoqueInsumo;
-    private LocalDate dataRegistro;
-    private Double quantidadeProduzida;
-    private String unidadeConsumo;    
+public class IdProcessoDto {
+    private Long idProcesso;
 }

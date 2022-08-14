@@ -1,6 +1,7 @@
 package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,4 +22,7 @@ public class ExecucaoFaseProcessamentoDto {
     private IdFaseDto fase;
     private LocalDate dataInicio;
     private LocalDate dataTermino;
+    private List<ItemEstoqueInsumoConsumidoDto> estoqueInsumoConsumido;
+    private List<ItemEstoqueInsumoProduzidoDto> estoqueInsumoProduzido;
+    private List<ItemProduzidoExecucaoDto> itemProduzidoExecucao;
 }

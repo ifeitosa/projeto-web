@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.modelos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ import lombok.ToString;
 public class ProdutoVenda {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Processo processo;
     @NotNull @NotBlank @NotEmpty @Column(length = 10240)
     private String descricao;

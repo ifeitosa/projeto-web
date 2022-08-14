@@ -11,7 +11,7 @@ import br.com.letscode.supernova.batatas.modelos.ItemEstoqueInsumo;
 import br.com.letscode.supernova.batatas.modelos.ItemEstoqueInsumoProduzido;
 
 @Repository
-public interface RepositorioItemEstoqueProduzido extends JpaRepository<ItemEstoqueInsumoProduzido, Long> {
+public interface RepositorioItemEstoqueInsumoProduzido extends JpaRepository<ItemEstoqueInsumoProduzido, Long> {
     List<ItemEstoqueInsumoProduzido> findByItemEstoqueInsumo(ItemEstoqueInsumo itemEstoqueInsumo);
     List<ItemEstoqueInsumoProduzido> findByExecucaoFaseProcessamento(ExecucaoFaseProcessamento execucaoFaseProcessamento);
     List<ItemEstoqueInsumoProduzido> findByDataRegistroBetween(LocalDate inicio, LocalDate termino);

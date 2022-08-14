@@ -15,10 +15,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ItemEstoqueInsumoConsumidoDto {
+public class ItemProduzidoExecucaoDto {
     private Long id;
-    private ItemEstoqueInsumoDto itemEstoqueInsumo;
+    private LoteProdutoVendaDto loteProdutoVenda;
     private LocalDate dataRegistro;
     private Double quantidadeProduzida;
-    private String unidadeConsumo;    
+    private String unidadeProducao;
 }

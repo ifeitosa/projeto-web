@@ -3,7 +3,6 @@ package br.com.letscode.supernova.batatas.rest;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

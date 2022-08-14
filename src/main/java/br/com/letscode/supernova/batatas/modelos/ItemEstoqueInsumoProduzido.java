@@ -1,6 +1,6 @@
 package br.com.letscode.supernova.batatas.modelos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -33,9 +33,9 @@ public class ItemEstoqueInsumoProduzido {
     @OneToOne(targetEntity = ExecucaoFaseProcessamento.class)
     private ExecucaoFaseProcessamento execucaoFaseProcessamento;
 
-    LocalDateTime dataRegistro;
+    LocalDate dataRegistro;
 
     Double quantidadeProduzida;
 
-    String unidadeConsumo;    
+    String unidadeProducao;    
 }

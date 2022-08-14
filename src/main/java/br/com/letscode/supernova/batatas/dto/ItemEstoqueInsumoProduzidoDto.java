@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ItemEstoqueInsumoConsumidoDto {
+public class ItemEstoqueInsumoProduzidoDto {
     private Long id;
     private ItemEstoqueInsumoDto itemEstoqueInsumo;
     private LocalDate dataRegistro;

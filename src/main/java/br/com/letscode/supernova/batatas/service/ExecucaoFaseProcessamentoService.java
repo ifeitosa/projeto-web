@@ -5,22 +5,20 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import javax.naming.NameNotFoundException;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.letscode.supernova.batatas.dto.ExecucaoFaseProcessamentoDto;
-import br.com.letscode.supernova.batatas.mapper.ExecucaoFaseProcessoMapper;
+import br.com.letscode.supernova.batatas.mapper.ExecucaoFaseProcessamentoMapper;
 import br.com.letscode.supernova.batatas.modelos.ExecucaoFaseProcessamento;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioExecucaoFaseProcessamento;
 
 @Service
 public class ExecucaoFaseProcessamentoService {
     @Autowired
-    ExecucaoFaseProcessoMapper mapper;
+    ExecucaoFaseProcessamentoMapper mapper;
     @Autowired
     RepositorioExecucaoFaseProcessamento repositorioExecucaoFaseProcessamento;
 
