@@ -13,6 +13,7 @@
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/dto/IdProcesso.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/modelos/ItemProduzidoExecucao.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/repositorios/RepositorioFase.java
+/home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/mapper/ProdutoVendaMapper.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/dto/ItemEstoqueInsumoDto.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/modelos/LoteProdutoVenda.java
 /home/italo/lets-code/projeto-web/src/main/java/br/com/letscode/supernova/batatas/mapper/ItemEstoqueInsumoMapper.java

@@ -1,5 +1,4 @@
 br/com/letscode/supernova/batatas/modelos/Insumo.class
-br/com/letscode/supernova/batatas/repositorios/RepositorioItemEstoqueInsumoProduzido.class
 br/com/letscode/supernova/batatas/modelos/InsumoFase.class
 br/com/letscode/supernova/batatas/service/InsumoService.class
 br/com/letscode/supernova/batatas/repositorios/RepositorioInsumo.class

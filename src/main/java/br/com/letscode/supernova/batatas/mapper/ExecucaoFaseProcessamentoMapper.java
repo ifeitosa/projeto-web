@@ -53,7 +53,7 @@ public class ExecucaoFaseProcessamentoMapper {
         private ItemEstoqueInsumoConsumidoDto fromEntity(ItemEstoqueInsumoConsumido entity) {
                 ItemEstoqueInsumoDto estoqueInsumo = ItemEstoqueInsumoMapper.fromEntity(entity.getItemEstoqueInsumo());
                 return new ItemEstoqueInsumoConsumidoDto(entity.getId(), estoqueInsumo, entity.getDataRegistro(),
-                                entity.getQuantidadeProduzida(), entity.getUnidadeConsumo());
+                                entity.getQuantidadeConsumida(), entity.getUnidadeConsumo());
         }
 
         private ItemEstoqueInsumoProduzidoDto fromEntity(ItemEstoqueInsumoProduzido entity) {

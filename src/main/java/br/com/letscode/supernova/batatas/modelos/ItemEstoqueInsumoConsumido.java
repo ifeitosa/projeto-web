@@ -36,7 +36,7 @@ public class ItemEstoqueInsumoConsumido {
 
     private LocalDate dataRegistro;
 
-    private Double quantidadeProduzida;
+    private Double quantidadeConsumida;
 
     private String unidadeConsumo;    
 }
