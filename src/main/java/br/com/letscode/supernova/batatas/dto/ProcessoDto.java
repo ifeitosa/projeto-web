@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
@@ -37,7 +38,8 @@ public class ProcessoDto {
     @NotEmpty(message = "O processo deve possuir uma descrição válida")
     @NotBlank(message = "O processo deve possuir uma descrição válida")
     private String descricao;
-    @NotNull(message = "A data de registro deve ser fornecida") 
+    @NotNull(message = "A data de registro deve ser fornecida")
+    @PastOrPresent(message = "A data de registro deve ser no máximo atual")
     @JsonFormat(lenient = OptBoolean.TRUE)
     private LocalDate dataRegistro;
     @NotNull(message = "O nome do responsável deve ser fornecido")

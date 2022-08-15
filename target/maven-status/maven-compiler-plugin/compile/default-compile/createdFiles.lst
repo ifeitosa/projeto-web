@@ -19,6 +19,7 @@ br\com\letscode\supernova\batatas\service\ProcessoService.class
 br\com\letscode\supernova\batatas\dto\ExecucaoFaseProcessamentoDto.class
 br\com\letscode\supernova\batatas\modelos\LoteProdutoVenda.class
 br\com\letscode\supernova\batatas\dto\InsumoConsumidoFaseDto.class
+br\com\letscode\supernova\batatas\dto\ErrosDto.class
 br\com\letscode\supernova\batatas\mapper\InsumoMapper.class
 br\com\letscode\supernova\batatas\exceptions\InsumoNaoEncontradoException.class
 br\com\letscode\supernova\batatas\dto\ItemEstoqueInsumoConsumidoDto.class
@@ -36,11 +37,13 @@ br\com\letscode\supernova\batatas\dto\ProcessoDto.class
 br\com\letscode\supernova\batatas\service\InsumoService.class
 br\com\letscode\supernova\batatas\dto\ItemEstoqueInsumoDto.class
 br\com\letscode\supernova\batatas\dto\ItemProduzidoExecucaoDto.class
+br\com\letscode\supernova\batatas\dto\ErroDto.class
 br\com\letscode\supernova\batatas\modelos\InsumoProduzidoFase.class
 br\com\letscode\supernova\batatas\beans\BeanInicializacao.class
 br\com\letscode\supernova\batatas\modelos\ItemEstoqueInsumoProduzido.class
 br\com\letscode\supernova\batatas\dto\FaseDto.class
 br\com\letscode\supernova\batatas\repositorios\RepositorioInsumoProduzidoFase.class
+br\com\letscode\supernova\batatas\errors\BatatasErrorHandler.class
 br\com\letscode\supernova\batatas\rest\ProcessoRestController.class
 br\com\letscode\supernova\batatas\mapper\ItemEstoqueInsumoMapper.class
 br\com\letscode\supernova\batatas\modelos\InsumoConsumidoFase.class

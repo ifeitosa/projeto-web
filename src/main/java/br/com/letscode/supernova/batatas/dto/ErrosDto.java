@@ -16,5 +16,5 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class ErrosDto {
-    List<ErroDto> erros;
+    List<String> erros;
 }
