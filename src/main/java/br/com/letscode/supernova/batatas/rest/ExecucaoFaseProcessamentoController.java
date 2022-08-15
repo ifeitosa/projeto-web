@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.letscode.supernova.batatas.dto.ExecucaoFaseProcessamentoDto;
@@ -48,10 +49,10 @@ public class ExecucaoFaseProcessamentoController {
         return this.service.inserirExecucaoFaseProcessamento(dto);
     }
 
-    @CacheEvict(cacheNames = {"obterExecucaoFaseProcessamento", "obterExecucaoFaseProcessamentoPelaFase"})
     @PutMapping("/{id:\\d+}")
-    public ExecucaoFaseProcessamentoDto corrigir(@PathVariable Long id, ExecucaoFaseProcessamentoDto dto) {
-        dto.setOS(id);
-        return this.service.alterarExecucaoFaseProcessamento(dto);
+    public ResponseEntity<ExecucaoFaseProcessamentoDto> corrigir(@PathVariable Long id, @RequestBody ExecucaoFaseProcessamentoDto dto) {        
+        if (dto.getDataInicio() == null || dto.getDataTermino() == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(this.service.alterarExecucaoFaseProcessamento(id, dto));
     }
 }

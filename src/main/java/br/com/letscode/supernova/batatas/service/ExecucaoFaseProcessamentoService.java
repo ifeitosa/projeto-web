@@ -60,8 +60,10 @@ public class ExecucaoFaseProcessamentoService {
     }
 
     public List<ExecucaoFaseProcessamentoDto> encontrarPelaDataEntre(LocalDate inicio, LocalDate termino) {
-        if (inicio == null) inicio = LocalDate.now().minusDays(30);
-        if (termino == null) termino = LocalDate.now();
+        if (inicio == null)
+            inicio = LocalDate.now().minusDays(30);
+        if (termino == null)
+            termino = LocalDate.now();
         return this.repositorioExecucaoFaseProcessamento.encontrarTodosQueIniciaramOuTerminaramEntre(inicio, termino)
                 .stream()
                 .map(mapper::fromEntity).collect(Collectors.toList());
@@ -71,40 +73,44 @@ public class ExecucaoFaseProcessamentoService {
     public ExecucaoFaseProcessamentoDto inserirExecucaoFaseProcessamento(ExecucaoFaseProcessamentoDto dto) {
         ExecucaoFaseProcessamento execucaoFaseProcessamento = mapper.toEntity(dto);
         execucaoFaseProcessamento = this.repositorioExecucaoFaseProcessamento.save(execucaoFaseProcessamento);
-        execucaoFaseProcessamento.setItemEstoqueInsumoConsumido(execucaoFaseProcessamento.getItemEstoqueInsumoConsumido().stream()
-        .map(repositorioItemEstoqueInsumoConsumido::save)
-        .map(ic -> {
-            ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
-            item.setQuantidade(item.getQuantidade() - ic.getQuantidadeConsumida());
-            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
-            return this.repositorioItemEstoqueInsumoConsumido.save(ic);
-        }).collect(Collectors.toList()));
-        execucaoFaseProcessamento.setItemEstoqueInsumoProduzido(execucaoFaseProcessamento.getItemEstoqueInsumoProduzido().stream()
-        .map(repositorioItemEstoqueInsumoProduzido::save)
-        .map(ic -> {
-            ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
-            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
-            return this.repositorioItemEstoqueInsumoProduzido.save(ic);
-        }).collect(Collectors.toList()));
+        execucaoFaseProcessamento
+                .setItemEstoqueInsumoConsumido(execucaoFaseProcessamento.getItemEstoqueInsumoConsumido().stream()
+                        .map(repositorioItemEstoqueInsumoConsumido::save)
+                        .map(ic -> {
+                            ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
+                            item.setQuantidade(item.getQuantidade() - ic.getQuantidadeConsumida());
+                            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
+                            return this.repositorioItemEstoqueInsumoConsumido.save(ic);
+                        }).collect(Collectors.toList()));
+        execucaoFaseProcessamento
+                .setItemEstoqueInsumoProduzido(execucaoFaseProcessamento.getItemEstoqueInsumoProduzido().stream()
+                        .map(repositorioItemEstoqueInsumoProduzido::save)
+                        .map(ic -> {
+                            ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
+                            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
+                            return this.repositorioItemEstoqueInsumoProduzido.save(ic);
+                        }).collect(Collectors.toList()));
         execucaoFaseProcessamento.setItemProduzidoExecucao(execucaoFaseProcessamento.getItemProduzidoExecucao().stream()
-        .map(repositorioItemProduzidoExecucao::save)
-        .map(ic -> {
-            LoteProdutoVenda loteProdutoVenda = ic.getLoteProdutoVenda();
-            loteProdutoVenda.setProdutoVenda(repositorioProdutoVenda.save(loteProdutoVenda.getProdutoVenda()));
-            ic.setLoteProdutoVenda(this.repositorioLoteProdutoVenda.save(ic.getLoteProdutoVenda()));
-            return this.repositorioItemProduzidoExecucao.save(ic);
-        }).collect(Collectors.toList()));
-        
+                .map(repositorioItemProduzidoExecucao::save)
+                .map(ic -> {
+                    LoteProdutoVenda loteProdutoVenda = ic.getLoteProdutoVenda();
+                    loteProdutoVenda.setProdutoVenda(repositorioProdutoVenda.save(loteProdutoVenda.getProdutoVenda()));
+                    ic.setLoteProdutoVenda(this.repositorioLoteProdutoVenda.save(ic.getLoteProdutoVenda()));
+                    return this.repositorioItemProduzidoExecucao.save(ic);
+                }).collect(Collectors.toList()));
+
         return mapper.fromEntity(repositorioExecucaoFaseProcessamento.save(execucaoFaseProcessamento));
     }
 
     @Transactional
-    public ExecucaoFaseProcessamentoDto alterarExecucaoFaseProcessamento(ExecucaoFaseProcessamentoDto dto) {
+    public ExecucaoFaseProcessamentoDto alterarExecucaoFaseProcessamento(Long OS, ExecucaoFaseProcessamentoDto dto) {
         ExecucaoFaseProcessamento execucaoFaseProcessamento = this.repositorioExecucaoFaseProcessamento
-                .getReferenceById(dto.getOS());
-        execucaoFaseProcessamento.setDataInicio(dto.getDataInicio());
-        execucaoFaseProcessamento.setDataTermino(dto.getDataTermino());
-        return mapper.fromEntity(this.repositorioExecucaoFaseProcessamento.save(execucaoFaseProcessamento));
+        .findById(OS).map(e -> {
+            e.setDataInicio(dto.getDataInicio());
+            e.setDataTermino(dto.getDataTermino());
+            return this.repositorioExecucaoFaseProcessamento.save(e);
+        }).get();        
+        return mapper.fromEntity(execucaoFaseProcessamento);
     }
 
 }

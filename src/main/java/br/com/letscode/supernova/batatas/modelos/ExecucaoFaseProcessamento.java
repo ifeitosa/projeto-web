@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.context.annotation.Lazy;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,7 +33,9 @@ public class ExecucaoFaseProcessamento {
     @ManyToOne(targetEntity = Fase.class)
     private Fase fase;
 
+    @Lazy(value = false)
     private LocalDate dataInicio;
+    @Lazy(value = false)
     private LocalDate dataTermino;
     @OneToMany
     private List<ItemEstoqueInsumoConsumido> itemEstoqueInsumoConsumido;

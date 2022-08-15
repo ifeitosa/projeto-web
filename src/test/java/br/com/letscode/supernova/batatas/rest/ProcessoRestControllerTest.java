@@ -72,7 +72,7 @@ public class ProcessoRestControllerTest {
                     new FaseDto(2, "Fase 2", "Instrução da fase 2", "g", 3.2D, List.of(consumidos[1], consumidos[2]), List.of(produzidos[1])),
                     new FaseDto(3, "Fase 3", "Instrução da fase 3", "m", 2.1D, List.of(consumidos[3]), List.of(produzidos[2]))
             };
-        private static final ProcessoDto processo = new ProcessoDto(null, "Processo de teste",
+        static final ProcessoDto processo = new ProcessoDto(null, "Processo de teste",
                         "Este é um processo de teste",
                         LocalDate.now(),
                         "Italo",

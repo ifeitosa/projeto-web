@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.ToString; 
 
 @Getter
 @Setter
@@ -20,7 +20,9 @@ public class ExecucaoFaseProcessamentoDto {
     
     private Long OS;
     private IdFaseDto fase;
+    
     private LocalDate dataInicio;
+    
     private LocalDate dataTermino;
     private List<ItemEstoqueInsumoConsumidoDto> estoqueInsumoConsumido;
     private List<ItemEstoqueInsumoProduzidoDto> estoqueInsumoProduzido;

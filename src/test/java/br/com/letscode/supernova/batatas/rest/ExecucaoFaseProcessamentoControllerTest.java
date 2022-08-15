@@ -1,13 +1,27 @@
-package br.com.letscode.supernova.batatas.service;
+package br.com.letscode.supernova.batatas.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.letscode.supernova.batatas.dto.ExecucaoFaseProcessamentoDto;
 import br.com.letscode.supernova.batatas.dto.FaseDto;
@@ -31,9 +45,19 @@ import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioItemEstoqueInsumo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioProcesso;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioProdutoVenda;
+import br.com.letscode.supernova.batatas.service.ExecucaoFaseProcessamentoService;
+import br.com.letscode.supernova.batatas.service.ProcessoService;
 
+@AutoConfigureMockMvc
 @SpringBootTest
-public class ExecucaoFaseProcessamentoServiceTest {
+@WithMockUser(value = "USER", username = "user", password = "batatas")
+public class ExecucaoFaseProcessamentoControllerTest {
+
+    @Autowired
+    MockMvc mvc;
+    @Autowired
+    ObjectMapper mapper;
+
     @Autowired
     ProcessoService processoService;
     @Autowired
@@ -49,7 +73,7 @@ public class ExecucaoFaseProcessamentoServiceTest {
     @Autowired
     ProdutoVendaMapper pvMapper;
     @Autowired
-    ExecucaoFaseProcessamentoMapper mapper;
+    ExecucaoFaseProcessamentoMapper exmapper;
 
     private static final InsumoDto[] insumos = {
             new InsumoDto(null, "Insumo 1", "kg", 10.0D),
@@ -95,7 +119,8 @@ public class ExecucaoFaseProcessamentoServiceTest {
                     LocalDate.now().plusDays(58), "premium"),
             new ItemEstoqueInsumoDto(null, insumos[1], 33.2D, LocalDate.now().minusDays(2),
                     LocalDate.now().plusDays(58), "premium"),
-            new ItemEstoqueInsumoDto(null, insumos[2], 99.2D, LocalDate.now().minusDays(27), LocalDate.now().plusDays(78),
+            new ItemEstoqueInsumoDto(null, insumos[2], 99.2D, LocalDate.now().minusDays(27),
+                    LocalDate.now().plusDays(78),
                     "regular"),
             new ItemEstoqueInsumoDto(null, insumos[3], 102D, LocalDate.now().minusDays(18),
                     LocalDate.now().plusDays(28), "premium")
@@ -136,18 +161,57 @@ public class ExecucaoFaseProcessamentoServiceTest {
     }
 
     @Test
-    public void deveSalvarExecucaoFaseProcessamento() {
-        
+    public void testarCriacaoExecucaoFaseProcessamento() throws Exception {
+
         ExecucaoFaseProcessamentoDto dto = criarDto();
 
-                System.out.print("[>>>] Antes de inserirExecucaoFaseProcessamento: ");
-                System.out.println(dto.toString());
+        ExecucaoFaseProcessamentoDto retorno = mapper.readValue(mvc
+                .perform(post("/faseProcessamento").contentType(MediaType.APPLICATION_JSON).content(asJsonString(dto)))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn().getResponse().getContentAsString(), ExecucaoFaseProcessamentoDto.class);
+        assertNotNull(retorno);
+        assertNotNull(retorno.getOS());
+    }
 
-        ExecucaoFaseProcessamentoDto resultado = service.inserirExecucaoFaseProcessamento(dto);
-        System.out.print("[>>>] Depois de inserirExecucaoFaseProcessamento: ");
-        System.out.println(resultado.toString());
-        assertNotNull(resultado);
+    @Test
+    public void testarAlterarExecucaoFaseProcessamento() throws Exception {
+        ExecucaoFaseProcessamentoDto dto = criarDto();
 
+        ExecucaoFaseProcessamentoDto criado = mapper.readValue(mvc
+                .perform(post("/faseProcessamento").contentType(MediaType.APPLICATION_JSON).content(asJsonString(dto)))
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn().getResponse().getContentAsString(), ExecucaoFaseProcessamentoDto.class);
+        assertNotNull(criado);
+        assertNotNull(criado.getOS());
+
+        ExecucaoFaseProcessamentoDto alterado = new ExecucaoFaseProcessamentoDto();
+        alterado.setOS(criado.getOS());
+        alterado.setDataInicio(LocalDate.now().minusDays(7));
+        alterado.setDataTermino(LocalDate.now().plusDays(180));
+        
+        ExecucaoFaseProcessamentoDto alteradoRetornado = mapper.readValue(
+            mvc.perform(put("/faseProcessamento/{id}", criado.getOS()).contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(alterado)))
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn().getResponse().getContentAsString(),
+            ExecucaoFaseProcessamentoDto.class);
+
+        assertEquals(criado.getOS(), alteradoRetornado.getOS());
+        assertNotEquals(criado.getDataInicio(), alteradoRetornado.getDataInicio());
+        assertNotEquals(criado.getDataTermino(), alteradoRetornado.getDataTermino());
+        assertEquals(criado.getFase(), alteradoRetornado.getFase());
+    }
+
+    private String asJsonString(ExecucaoFaseProcessamentoDto o) {
+        try {
+            mapper.findAndRegisterModules();
+            return mapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            fail();
+        }
+        return "{}";
     }
 
 }
