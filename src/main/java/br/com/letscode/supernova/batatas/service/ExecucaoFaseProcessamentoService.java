@@ -82,7 +82,7 @@ public class ExecucaoFaseProcessamentoService {
         .map(ic -> {
             ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
             item.setInsumo(repositorioInsumo.save(repositorioInsumo.findById(item.getInsumo().getId()).get()));
-            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(ic.getItemEstoqueInsumo()));
+            ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
             return this.repositorioItemEstoqueInsumoProduzido.save(ic);
         }).collect(Collectors.toList()));
         execucaoFaseProcessamento.setItemProduzidoExecucao(execucaoFaseProcessamento.getItemProduzidoExecucao().stream()
