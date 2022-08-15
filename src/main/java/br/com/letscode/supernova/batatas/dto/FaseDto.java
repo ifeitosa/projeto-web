@@ -22,20 +22,27 @@ import lombok.ToString;
 @ToString
 public class FaseDto {
     
-    @Positive
+    @Positive(message = "A sequência da fase deve ser especificada")
     private Integer sequencia;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "A fase deve possuir um nome que a identifique")
+    @NotEmpty(message = "A fase deve possuir um nome que a identifique")
+    @NotBlank(message = "A fase deve possuir um nome que a identifique")
     private String nome;
-    @NotNull @NotBlank @NotEmpty
+    @NotNull(message = "Instruções para execucação da fase deve ser fornecidas")
+    @NotBlank(message = "Instruções para execucação da fase deve ser fornecidas") 
+    @NotEmpty(message = "Instruções para execucação da fase deve ser fornecidas")
     private String instrucoes;
-    @NotNull @NotBlank @NotEmpty
+    @NotNull(message = "Unidade de produção deve ser especificada")
+    @NotBlank(message = "Unidade de produção deve ser especificada")
+    @NotEmpty(message = "Unidade de produção deve ser especificada")
     private String unidadeProducao;
-    @Positive @NotNull
+    @Positive(message = "Quantidade produzida deve ser positiva") 
+    @NotNull(message = "Quantidade produzida na fase deve ser identificada")
     private Double quantidadeProduzida;
     
-    @NotNull
+    @NotNull(message = "Lista de insumos consumidos deve ser fornecida")
     private List<InsumoConsumidoFaseDto> insumosConsumidos;
-    @NotNull
+    @NotNull(message = "Lista de insumos produzidos deve ser fornecida")
     private List<InsumoProduzidoFaseDto> insumoProduzidos;
     
 }

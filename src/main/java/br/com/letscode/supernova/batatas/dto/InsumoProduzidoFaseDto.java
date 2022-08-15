@@ -1,6 +1,9 @@
 package br.com.letscode.supernova.batatas.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,10 +19,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class InsumoProduzidoFaseDto {
-    @NotNull
+    @NotNull(message = "O item de insumo produzido deve fazer referência a uma insumo listado")
     private InsumoDto insumo;
-    @NotNull
+    @NotNull(message = "A quantidade de insumo consumida deve ser positiva") 
+    @Positive(message = "A quantidade de insumo consumida deve ser positiva") 
     private Double quantidadeProduzida;
-    @NotNull
+    @NotNull(message = "A unidade de produção de insumo deve ser especificada")
+    @NotEmpty(message = "A unidade de produção de insumo deve ser especificada")
+    @NotBlank(message = "A unidade de produção de insumo deve ser especificada")
     private String unidadeProducao;
 }
