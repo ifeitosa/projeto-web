@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import br.com.letscode.supernova.batatas.dto.ExecucaoFaseProcessamentoDto;
 import br.com.letscode.supernova.batatas.mapper.ExecucaoFaseProcessamentoMapper;
 import br.com.letscode.supernova.batatas.modelos.ExecucaoFaseProcessamento;
 import br.com.letscode.supernova.batatas.modelos.ItemEstoqueInsumo;
+import br.com.letscode.supernova.batatas.modelos.LoteProdutoVenda;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioExecucaoFaseProcessamento;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioInsumo;
 import br.com.letscode.supernova.batatas.repositorios.RepositorioItemEstoqueInsumo;
@@ -65,6 +67,7 @@ public class ExecucaoFaseProcessamentoService {
                 .map(mapper::fromEntity).collect(Collectors.toList());
     }
 
+    @Transactional
     public ExecucaoFaseProcessamentoDto inserirExecucaoFaseProcessamento(ExecucaoFaseProcessamentoDto dto) {
         ExecucaoFaseProcessamento execucaoFaseProcessamento = mapper.toEntity(dto);
         execucaoFaseProcessamento = this.repositorioExecucaoFaseProcessamento.save(execucaoFaseProcessamento);
@@ -72,7 +75,6 @@ public class ExecucaoFaseProcessamentoService {
         .map(repositorioItemEstoqueInsumoConsumido::save)
         .map(ic -> {
             ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
-            item.setInsumo(repositorioInsumo.save(repositorioInsumo.findById(item.getInsumo().getId()).get()));
             item.setQuantidade(item.getQuantidade() - ic.getQuantidadeConsumida());
             ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
             return this.repositorioItemEstoqueInsumoConsumido.save(ic);
@@ -81,13 +83,14 @@ public class ExecucaoFaseProcessamentoService {
         .map(repositorioItemEstoqueInsumoProduzido::save)
         .map(ic -> {
             ItemEstoqueInsumo item = ic.getItemEstoqueInsumo();
-            item.setInsumo(repositorioInsumo.save(repositorioInsumo.findById(item.getInsumo().getId()).get()));
             ic.setItemEstoqueInsumo(repositorioItemEstoqueInsumo.save(item));
             return this.repositorioItemEstoqueInsumoProduzido.save(ic);
         }).collect(Collectors.toList()));
         execucaoFaseProcessamento.setItemProduzidoExecucao(execucaoFaseProcessamento.getItemProduzidoExecucao().stream()
         .map(repositorioItemProduzidoExecucao::save)
         .map(ic -> {
+            LoteProdutoVenda loteProdutoVenda = ic.getLoteProdutoVenda();
+            loteProdutoVenda.setProdutoVenda(repositorioProdutoVenda.save(loteProdutoVenda.getProdutoVenda()));
             ic.setLoteProdutoVenda(this.repositorioLoteProdutoVenda.save(ic.getLoteProdutoVenda()));
             return this.repositorioItemProduzidoExecucao.save(ic);
         }).collect(Collectors.toList()));
@@ -95,6 +98,7 @@ public class ExecucaoFaseProcessamentoService {
         return mapper.fromEntity(repositorioExecucaoFaseProcessamento.save(execucaoFaseProcessamento));
     }
 
+    @Transactional
     public ExecucaoFaseProcessamentoDto alterarExecucaoFaseProcessamento(ExecucaoFaseProcessamentoDto dto) {
         ExecucaoFaseProcessamento execucaoFaseProcessamento = this.repositorioExecucaoFaseProcessamento
                 .getReferenceById(dto.getOS());

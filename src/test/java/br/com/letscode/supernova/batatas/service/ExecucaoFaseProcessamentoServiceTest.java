@@ -134,7 +134,12 @@ public class ExecucaoFaseProcessamentoServiceTest {
                 LocalDate.now().minusDays(10), LocalDate.now(), List.of(insumosConsumidos[0], insumosConsumidos[1]),
                 List.of(insumosProduzidos[0]), List.of(itensProduzidos[0]));
 
+                System.out.print("[>>>] Antes de inserirExecucaoFaseProcessamento: ");
+                System.out.println(dto.toString());
+
         ExecucaoFaseProcessamentoDto resultado = service.inserirExecucaoFaseProcessamento(dto);
+        System.out.print("[>>>] Depois de inserirExecucaoFaseProcessamento: ");
+        System.out.println(resultado.toString());
         assertNotNull(resultado);
 
     }
