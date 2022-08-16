@@ -70,17 +70,5 @@ public class ProcessoRestController {
     public void deletarProcesso(@PathVariable Long id) {
         this.service.deletarProcesso(id);
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> tratarExcecaoValidacao(MethodArgumentNotValidException ex) {
-        Map<String, String> erros = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach(erro -> {
-            String campo = ((FieldError) erro).getField();
-            String mensagem = erro.getDefaultMessage();
-            erros.put(campo, mensagem);
-        });
-        return erros;
-    }
     
 }
