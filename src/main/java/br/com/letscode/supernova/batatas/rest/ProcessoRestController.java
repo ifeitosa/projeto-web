@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.webjars.NotFoundException;
 
 import br.com.letscode.supernova.batatas.dto.ProcessoDto;
 import br.com.letscode.supernova.batatas.service.ProcessoService;
@@ -49,8 +50,13 @@ public class ProcessoRestController {
 
     @CacheEvict(cacheNames = "obterProcessos")
     @PutMapping(path = "/{id:\\d+}")
-    public ProcessoDto corrigirProcesso(@PathVariable Long id, @Valid @RequestBody ProcessoDto dto) {
-        return this.service.corrigirProcesso(id, dto);
+    public ResponseEntity<ProcessoDto> corrigirProcesso(@PathVariable Long id, @Valid @RequestBody ProcessoDto dto) {
+        ProcessoDto retorno = this.service.corrigirProcesso(id, dto);
+        if (retorno == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.of(Optional.of(retorno));
+        }
     }
 
     @Cacheable(cacheNames = "obterProcessos")
@@ -59,7 +65,7 @@ public class ProcessoRestController {
         Objects.requireNonNull(id);
         Optional<ProcessoDto> dto = this.service.obterProcesso(id);
         if (dto.isPresent()) {
-            return ResponseEntity.ok(dto.get());
+            return ResponseEntity.of(dto);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -82,5 +88,5 @@ public class ProcessoRestController {
         });
         return erros;
     }
-    
+
 }

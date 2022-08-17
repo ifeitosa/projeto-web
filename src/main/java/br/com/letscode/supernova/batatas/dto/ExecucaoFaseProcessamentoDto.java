@@ -3,6 +3,7 @@ package br.com.letscode.supernova.batatas.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
@@ -31,8 +32,11 @@ public class ExecucaoFaseProcessamentoDto {
     @FutureOrPresent(message = "A data de término da execução da fase deve ser no mínimo a de hoje")
     private LocalDate dataTermino;
     @NotEmpty(message = "É necessário especificar os insumos necessários para a fase")
+    @Valid
     private List<ItemEstoqueInsumoConsumidoDto> estoqueInsumoConsumido;
+    @Valid
     @NotEmpty(message = "É necessário especificar os insumos produzidos pela fase")
     private List<ItemEstoqueInsumoProduzidoDto> estoqueInsumoProduzido;
+    @Valid
     private List<ItemProduzidoExecucaoDto> itemProduzidoExecucao;
 }

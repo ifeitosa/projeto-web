@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ import lombok.ToString;
 public class ItemEstoqueInsumoConsumidoDto {
     @Positive(message = "O identificador do item de estoque de insumo consumido deve ser positivo")
     private Long id;
+    @Valid
     @NotNull(message = "O item de estoque de insumo deve ser referenciado")
     private ItemEstoqueInsumoDto itemEstoqueInsumo;
     @PastOrPresent(message = "A data de registro deve ser atual ou anterior")

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,7 @@ public class ProcessoDto {
     private String responsavel;
     @NotEmpty(message = "A lista de fases do processo deve ser fornecida")
     @NotNull(message  = "A lista de fases do processo deve ser fornecida")
+    @Valid
     private List<FaseDto> fases = new ArrayList<>();
 
       

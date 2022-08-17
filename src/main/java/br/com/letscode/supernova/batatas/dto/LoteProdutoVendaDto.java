@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -26,6 +27,7 @@ public class LoteProdutoVendaDto {
     @Positive(message = "O lote do produto de venda deve ser positivo")
     private Long lote;
     @NotNull(message = "O produto de venda referido pelo lote deve ser válido")
+    @Valid
     private ProdutoVendaDto produtoVenda;
     @NotNull(message = "A data de validade do lote de produto de venda deve ser futura")
     @PastOrPresent(message = "A data de fabricação do lote de produto de venda deve ser no máximo atual")

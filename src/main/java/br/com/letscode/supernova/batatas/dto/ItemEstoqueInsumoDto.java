@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -25,6 +26,7 @@ import lombok.ToString;
 public class ItemEstoqueInsumoDto {
     @Positive(message = "O lote do item de estoque de insumo deve ser positivo")
     private Long lote;
+    @Valid
     @NotNull(message = "O item de estoque de insumo deve fazer referência a um item de insumo válido")
     private InsumoDto insumo;
 

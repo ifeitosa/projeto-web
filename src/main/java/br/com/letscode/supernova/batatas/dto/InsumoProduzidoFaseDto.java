@@ -1,5 +1,6 @@
 package br.com.letscode.supernova.batatas.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class InsumoProduzidoFaseDto {
+    @Valid
     @NotNull(message = "O item de insumo produzido deve fazer referência a uma insumo listado")
     private InsumoDto insumo;
     @NotNull(message = "A quantidade de insumo consumida deve ser positiva") 

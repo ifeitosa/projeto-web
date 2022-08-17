@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class ItemProduzidoExecucaoDto {
     @Positive(message = "O identificador de item produzido na execução deve ser positivo")
     private Long id;
     @NotNull(message = "O item produzido na execução deve fazer referência a um lote de produto para venda válido")
+    @Valid
     private LoteProdutoVendaDto loteProdutoVenda;
     @PastOrPresent(message = "A data de registro do item produzido na execução deve ser no máximo atual")
     private LocalDate dataRegistro;

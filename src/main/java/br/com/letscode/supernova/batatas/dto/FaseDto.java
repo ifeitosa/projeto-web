@@ -2,6 +2,7 @@ package br.com.letscode.supernova.batatas.dto;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -21,8 +22,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class FaseDto {
-    
-    @Positive(message = "A sequência da fase deve ser especificada")
+    @NotNull(message = "O número de sequência da fase deve ser especificado")
+    @Positive(message = "O número de sequência da fase deve ser especificado")
     private Integer sequencia;
     @NotNull(message = "A fase deve possuir um nome que a identifique")
     @NotEmpty(message = "A fase deve possuir um nome que a identifique")
@@ -40,8 +41,10 @@ public class FaseDto {
     @NotNull(message = "Quantidade produzida na fase deve ser identificada")
     private Double quantidadeProduzida;
     
+    @Valid
     @NotNull(message = "Lista de insumos consumidos deve ser fornecida")
     private List<InsumoConsumidoFaseDto> insumosConsumidos;
+    @Valid
     @NotNull(message = "Lista de insumos produzidos deve ser fornecida")
     private List<InsumoProduzidoFaseDto> insumoProduzidos;
     
