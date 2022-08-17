@@ -48,8 +48,8 @@ public class ProcessoRestController {
     @Operation(summary = "Adicionar um processo", responses = {
         @ApiResponse(description = "Sucesso", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProcessoDto.class))),
         @ApiResponse(responseCode = "400", description = "Requisição mal formada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrosDto.class)))})
-    public ProcessoDto adicionarProceso(@Valid @RequestBody ProcessoDto dto) {
-        return this.service.adicionarProcesso(dto);
+    public ResponseEntity<ProcessoDto> adicionarProceso(@Valid @RequestBody ProcessoDto dto) {
+        return ResponseEntity.of(Optional.of(this.service.adicionarProcesso(dto)));
     }
 
     @CacheEvict(cacheNames = "obterProcessos")
